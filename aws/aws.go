@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/aws/aws-sdk-go/service/cloudformation"
+	"github.com/blentz/cloud-haunter/utils"
 	"net/http"
 	"os"
 	"strings"
@@ -24,8 +26,8 @@ import (
 	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/aws/aws-sdk-go/service/iam"
 	"github.com/aws/aws-sdk-go/service/rds"
-	ctx "github.com/hortonworks/cloud-haunter/context"
-	"github.com/hortonworks/cloud-haunter/types"
+	ctx "github.com/blentz/cloud-haunter/context"
+	"github.com/blentz/cloud-haunter/types"
 	log "github.com/sirupsen/logrus"
 )
 

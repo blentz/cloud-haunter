@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hortonworks/cloud-haunter/utils"
+	"github.com/blentz/cloud-haunter/utils"
 
 	"sync"
 
@@ -20,8 +20,8 @@ import (
 	"github.com/Azure/azure-storage-blob-go/azblob"
 	"github.com/Azure/go-autorest/autorest"
 	"github.com/Azure/go-autorest/autorest/azure/auth"
-	ctx "github.com/hortonworks/cloud-haunter/context"
-	"github.com/hortonworks/cloud-haunter/types"
+	ctx "github.com/blentz/cloud-haunter/context"
+	"github.com/blentz/cloud-haunter/types"
 	log "github.com/sirupsen/logrus"
 )
 

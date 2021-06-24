@@ -13,8 +13,8 @@ import (
 	elb "github.com/aws/aws-sdk-go/service/elbv2"
 	"github.com/aws/aws-sdk-go/service/iam"
 	"github.com/aws/aws-sdk-go/service/rds"
-	ctx "github.com/hortonworks/cloud-haunter/context"
-	"github.com/hortonworks/cloud-haunter/types"
+	ctx "github.com/blentz/cloud-haunter/context"
+	"github.com/blentz/cloud-haunter/types"
 	"github.com/stretchr/testify/assert"
 )
 

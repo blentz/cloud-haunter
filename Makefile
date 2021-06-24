@@ -4,7 +4,7 @@ GO_VERSION?=$(shell cat go.mod | grep '^go' | awk '{print $$2}')
 
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 VERSION?=$(shell git describe --tags --abbrev=0)-snapshot
-PKG_BASE=github.com/hortonworks/cloud-haunter
+PKG_BASE=github.com/blentz/cloud-haunter
 BUILD_TIME=$(shell date +%FT%T)
 LDFLAGS=-w -s -X $(PKG_BASE)/context.Version=${VERSION} -X $(PKG_BASE)/context.BuildTime=${BUILD_TIME}
 

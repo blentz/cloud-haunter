@@ -1,4 +1,4 @@
-module github.com/hortonworks/cloud-haunter
+module github.com/blentz/cloud-haunter
 
 go 1.15
 

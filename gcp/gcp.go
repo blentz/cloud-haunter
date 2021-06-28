@@ -1021,6 +1021,7 @@ func (p gcpProvider) getDisks() ([]*types.Disk, error) {
 				log.Errorf("[GCP] Failed to get the creation timestamp of disk, err: %s", err.Error())
 				return nil, err
 			}
+			tags := convertTags(gDisk.Labels)
 
 			var region string
 			switch {

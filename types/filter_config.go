@@ -33,6 +33,14 @@ type FilterConfig struct {
 	IncludeAccess   *FilterAccessConfig   `yaml:"includeAccess"`
 	ExcludeInstance *FilterInstanceConfig `yaml:"excludeInstance"`
 	IncludeInstance *FilterInstanceConfig `yaml:"includeInstance"`
+	ExcludeImage    *FilterImageConfig    `yaml:"excludeImage"`
+	IncludeImage    *FilterImageConfig    `yaml:"includeImage"`
+	ExcludeDatabase *FilterDatabaseConfig `yaml:"excludeDatabase"`
+	IncludeDatabase *FilterDatabaseConfig `yaml:"includeDatabase"`
+	ExcludeDisk     *FilterDiskConfig     `yaml:"excludeDisk"`
+	IncludeDisk     *FilterDiskConfig     `yaml:"includeDisk"`
+	ExcludeStack    *FilterStackConfig    `yaml:"excludeStack"`
+	IncludeStack    *FilterStackConfig    `yaml:"includeStack"`
 }
 
 // FilterAccessConfig filter properties for access items
@@ -85,4 +93,80 @@ func (filterConfig FilterConfig) GetFilterValues(fType FilterEntityType, cloud C
 		}
 	}
 	return nil
+}
+
+// FilterImageConfig filter properties for image items
+type FilterImageConfig struct {
+	Aws struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"aws"`
+	Azure struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"azure"`
+	Gcp struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"gcp"`
+}
+
+// FilterDatabaseConfig filter properties for image items
+type FilterDatabaseConfig struct {
+	Aws struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"aws"`
+	Azure struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"azure"`
+	Gcp struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"gcp"`
+}
+
+// FilterDiskConfig filter properties for image items
+type FilterDiskConfig struct {
+	Aws struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"aws"`
+	Azure struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"azure"`
+	Gcp struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"gcp"`
+}
+
+// FilterStackConfig filter properties for image items
+type FilterStackConfig struct {
+	Aws struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"aws"`
+	Azure struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"azure"`
+	Gcp struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"gcp"`
 }

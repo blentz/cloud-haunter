@@ -30,7 +30,7 @@ endif
 
 GOFILES_NOVENDOR = $(shell find . -type f -name '*.go' -not -path "./vendor/*" -not -path "./.git/*")
 
-all: deps build
+all: deps format build
 
 deps:
 ifeq (, $(shell which gh))

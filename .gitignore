@@ -8,3 +8,6 @@ release
 .env
 cloud-haunter
 release
+**/*.swp
+**/*.swo
+**/.DS_Store

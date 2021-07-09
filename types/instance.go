@@ -74,3 +74,8 @@ func (i Instance) GetType() string {
 func (i Instance) GetTags() Tags {
 	return i.Tags
 }
+
+// GetType returns the type representation of the instance
+func (i Instance) GetUrl(path string) string {
+	return "NotYetImplemented"
+}

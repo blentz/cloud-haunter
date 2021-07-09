@@ -950,6 +950,7 @@ func newInstance(inst *compute.Instance) *types.Instance {
 		Region:       getRegionFromZoneURL(&inst.Zone),
 		InstanceType: inst.MachineType[strings.LastIndex(inst.MachineType, "/")+1:],
 		State:        getInstanceState(inst),
+                //TODO: do we need to extend this structure with the network interface info?
 	}
 }
 

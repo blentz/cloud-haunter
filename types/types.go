@@ -49,6 +49,7 @@ type CloudItem interface {
 	GetItem() interface{}
 	GetType() string
 	GetTags() Tags
+        GetUrl() bool
 }
 
 // Dispatcher interface used to send the messages with

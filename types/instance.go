@@ -157,4 +157,7 @@ func tcpPortTest(host string, port string) bool {
 		return true
 	}
 	return false
+
+func (i Instance) GetUrl(path string) string {
+	return "NotYetImplemented"
 }

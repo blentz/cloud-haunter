@@ -70,3 +70,8 @@ func (i Instance) GetItem() interface{} {
 func (i Instance) GetType() string {
 	return "instance"
 }
+
+// GetType returns the type representation of the instance
+func (i Instance) GetUrl(path string) string {
+	return "NotYetImplemented"
+}

@@ -45,6 +45,7 @@ type CloudItem interface {
 	GetCreated() time.Time
 	GetItem() interface{}
 	GetType() string
+        GetUrl() bool
 }
 
 // Dispatcher interface used to send the messages with

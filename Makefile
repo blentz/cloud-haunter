@@ -30,7 +30,7 @@ endif
 
 GOFILES_NOVENDOR = $(shell find . -type f -name '*.go' -not -path "./vendor/*" -not -path "./.git/*")
 
-all: deps build
+all: deps format build
 
 deps:
 ifeq (, $(shell which gh))
@@ -91,5 +91,5 @@ release: cleanup build
 	./release.sh
 
 download:
-	curl -LOs https://github.com/hortonworks/cloud-haunter/releases/download/v$(VERSION)/cloud-haunter_$(VERSION)_$(shell uname)_x86_64.tgz
+	curl -LOs https://github.com/blentz/cloud-haunter/releases/download/v$(VERSION)/cloud-haunter_$(VERSION)_$(shell uname)_x86_64.tgz
 	tar -xvf cloud-haunter_$(VERSION)_$(shell uname)_x86_64.tgz

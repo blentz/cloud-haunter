@@ -1,11 +1,11 @@
 package operation
 
 import (
-    "os"
+	"os"
 
-    ctx "github.com/blentz/cloud-haunter/context"
-    "github.com/blentz/cloud-haunter/types"
-    log "github.com/sirupsen/logrus"
+	ctx "github.com/blentz/cloud-haunter/context"
+	"github.com/blentz/cloud-haunter/types"
+	log "github.com/sirupsen/logrus"
 )
 
 type httpUrl struct {

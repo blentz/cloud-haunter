@@ -25,7 +25,7 @@ LDFLAGS+= -X '$(PKG_BASE)/context.AzureCreationTimeLabel=$(AZURE_CREATION_TIME_L
 
 GOFILES_NOVENDOR = $(shell find . -type f -name '*.go' -not -path "./vendor/*" -not -path "./.git/*")
 
-all: deps build
+all: deps format build
 
 deps:
 ifeq (, $(shell which gh))

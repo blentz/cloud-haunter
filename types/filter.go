@@ -36,6 +36,9 @@ const (
 
 	// HttpUrlFilter filters the items based on the response of an HTTP endpoint
 	HttpUrlFilter = FilterType("httpurl")
+
+	// TamrLicenseFilter filters the items based on the presence of a Tamr license.
+	TamrLicenseFilter = FilterType("tamr-unlicensed")
 )
 
 // FilterConfigType inclusive or exclusive filter type

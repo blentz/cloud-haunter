@@ -20,8 +20,12 @@ func (o ownerless) Execute(items []types.CloudItem) []types.CloudItem {
 		switch item.GetItem().(type) {
 		case types.Instance:
 			inst := item.(*types.Instance)
+			if inst.State == types.Terminated {
+				log.Debugf("[OWNERLESS] Filter does not apply for cloud item: %s (%s)", item.GetName(), inst.State)
+				return true
+			}
 			match := !utils.IsAnyMatch(inst.Tags, ctx.OwnerLabel)
-			log.Debugf("[OWNERLESS] Instance: %s match: %v", inst.Name, match)
+			log.Debugf("[OWNERLESS] Instance: %s match: %v (%s)", inst.Name, match, inst.State)
 			return match
 		case types.Stack:
 			stack := item.(*types.Stack)

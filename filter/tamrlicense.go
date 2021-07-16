@@ -1,6 +1,7 @@
 package operation
 
 import (
+	"encoding/json"
 	"os"
 	"time"
 
@@ -41,25 +42,35 @@ func (f tamrLicenseInputs) Execute(items []types.CloudItem) []types.CloudItem {
 			}
 		default:
 			log.Fatalf("[TAMR-LICENSE] Filter does not apply for cloud item: %s", item.GetName())
-			return true
+			return false
 		}
-		response := item.GetItem().(types.Instance).GetUrl(f.path, f.port)
-		if response.Error {
-			if response.Code == 999 {
-				log.Debugf("[TAMR-LICENSE] Filter %s, because %s does not appear to be running Tamr, response: %+v", item.GetType(), item.GetName(), response)
-				return false // instance is not unlicensed; instance is probably not running tamr
-			}
-			if response.Json.License.Healthy == false || response.Json.License.Message == "tamr license is not valid" {
-				log.Debugf("[TAMR-LICENSE] %s: %s does not have a valid license, response: %+v", item.GetType(), item.GetName(), response)
-			}
-			return true
+		version := item.GetItem().(types.Instance).GetUrl("TAMR-LICENSE", "/api/service/version", f.port)
+		if version.Error {
+			log.Debugf("[TAMR-LICENSE] Filter %s, because %s does not appear to be running Tamr, response: %+v", item.GetType(), item.GetName(), version)
+			return false // instance is not unlicensed; instance is probably not running tamr
+		} else {
+			log.Debugf("[TAMR-LICENSE] %s %s is running Tamr, response: %+v", item.GetType(), item.GetName(), version.Json)
 		}
-		if response.Json.License.EffectiveUntil.Before(time.Now().Add(LICENSE_GRACE_DAYS)) {
+		response := item.GetItem().(types.Instance).GetUrl("TAMR-LICENSE", f.path, f.port)
+		switch response.Code {
+		case 999:
+			log.Debugf("[TAMR-LICENSE] Filter %s, because %s does not appear to be running Tamr, response: %+v", item.GetType(), item.GetName(), response)
+			return false // instance is not unlicensed; instance is probably not running tamr
+		case 200:
+			var tamrBody types.TamrResponseBody
+			json.Unmarshal(response.Body, &tamrBody)
+			if tamrBody.License.Healthy &&
+				tamrBody.License.Message != "tamr license is not valid" &&
+				tamrBody.License.Timestamp.Before(time.Now().Add(LICENSE_GRACE_DAYS)) {
+				log.Debugf("[TAMR-LICENSE] %s: %s has a valid license until %s",
+					item.GetType(),
+					item.GetName(),
+					tamrBody.License.Timestamp)
+			}
+			return false
+		default:
 			log.Debugf("[TAMR-LICENSE] %s: %s does not have a valid license, response: %+v", item.GetType(), item.GetName(), response.Json)
-			return true
-
+			return true // instance listens on the port, but doesn't give us a valid response.
 		}
-		log.Debugf("[TAMR-LICENSE] Filter %s, because %s has a valid license, response: %+v", item.GetType(), item.GetName(), response.Json)
-		return false // instance is not unlicensed; instance is licensed
 	})
 }

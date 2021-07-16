@@ -40,7 +40,7 @@ func (f httpUrl) Execute(items []types.CloudItem) []types.CloudItem {
 			log.Fatalf("[HTTPURL] Filter does not apply for cloud item: %s", item.GetName())
 			return true
 		}
-		response := item.GetItem().(types.Instance).GetUrl(f.path, f.port)
+		response := item.GetItem().(types.Instance).GetUrl("HTTPURL", f.path, f.port)
 		if response.Code >= 400 {
 			return false
 		}

@@ -11,6 +11,13 @@ import (
 	"time"
 )
 
+type RemoteResponse struct {
+	Code  int
+	Body  []byte
+	Error bool
+	Json  interface{}
+}
+
 type InstanceContainer struct {
 	instances []*Instance
 }
@@ -81,25 +88,8 @@ func (i Instance) GetType() string {
 	return "instance"
 }
 
-type TamrLicense struct {
-	Healthy        bool      `json:"healthy"`
-	Message        string    `json:"message"`
-	EffectiveUntil time.Time `json:"effectiveUntil"`
-}
-
-type JsonResponseBody struct {
-	License TamrLicense `json:"license"`
-}
-
-type RemoteResponse struct {
-	Code  int
-	Body  string
-	Json  JsonResponseBody
-	Error bool
-}
-
 // GetUrl returns the result of an HTTP request to the instance
-func (i Instance) GetUrl(path string, port string) RemoteResponse {
+func (i Instance) GetUrl(filterName string, path string, port string) RemoteResponse {
 	var uri string
 	checkPort := "80"
 
@@ -110,50 +100,60 @@ func (i Instance) GetUrl(path string, port string) RemoteResponse {
 		checkPort = port
 	}
 
-	if tcp_port_test(i.IpAddress, checkPort) == false {
-		return RemoteResponse{999, "", JsonResponseBody{}, true}
+	if i.TcpPortTest(filterName, checkPort) == false {
+		return RemoteResponse{999, nil, true, nil}
 	}
 
-	log.Debugf("Making HTTP request to %s", uri)
-	resp, err := http.Get(uri)
+	log.Debugf("[%s] Making HTTP request to %s", filterName, uri)
+	client := http.Client{
+		Timeout: 2 * time.Second,
+	}
+	resp, err := client.Get(uri)
 	if err != nil {
-		log.Errorf("Error fetching %s - %s", uri, err)
-		return RemoteResponse{999, "", JsonResponseBody{}, true}
+		log.Errorf("[%s] Error fetching %s - %s", filterName, uri, err)
+		return RemoteResponse{998, nil, true, nil}
 	}
-	log.Debug("HTTP response: ", resp.Status)
-
-	if resp.ContentLength < 1 {
-		log.Debug("HTTP request returned empty response.")
-		return RemoteResponse{resp.StatusCode, "", JsonResponseBody{}, true}
-	}
+	log.Debugf("[%s] HTTP response: %s", filterName, resp.Status)
 
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Error("Error reading response body", err)
+		log.Errorf("[%s] Error reading response body: %+v", filterName, err)
+		return RemoteResponse{997, body, true, nil}
 	}
 
 	if resp.Header.Get("Content-Type") == "application/json" {
-		jsonbody := JsonResponseBody{}
-		json.Unmarshal(body, &jsonbody)
-		log.Debug("HTTP Body: ", jsonbody)
-		return RemoteResponse{resp.StatusCode, "", jsonbody, false}
+		switch filterName {
+		case "tamr-unlicensed":
+			return RemoteResponse{resp.StatusCode, body, false, ParseTamrLicenseSchema(filterName, body)}
+		default:
+			var i interface{}
+			json.Unmarshal(body, &i)
+			j := i.(map[string]interface{})
+			log.Debugf("[%s] JSON Body: %+v", filterName, j)
+			return RemoteResponse{resp.StatusCode, body, false, j}
+		}
+	}
+
+	if resp.ContentLength < 1 {
+		log.Debugf("[%s] HTTP request returned empty response.", filterName)
+		return RemoteResponse{995, body, true, nil}
 	}
 
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(resp.Body)
-	return RemoteResponse{resp.StatusCode, buf.String(), JsonResponseBody{}, false}
+	return RemoteResponse{resp.StatusCode, body, false, nil}
 }
 
-func tcp_port_test(host string, port string) bool {
+func (i Instance) TcpPortTest(filterName string, port string) bool {
 	timeout := time.Second
-	conn, err := net.DialTimeout("tcp", net.JoinHostPort(host, port), timeout)
+	conn, err := net.DialTimeout("tcp", net.JoinHostPort(i.IpAddress, port), timeout)
 	if err != nil {
-		log.Debugf("Error making TCP connection to %s -> %s", net.JoinHostPort(host, port), err)
+		log.Debugf("[%s] Error making TCP connection to %s -> %s", filterName, net.JoinHostPort(i.IpAddress, port), err)
 	}
 	if conn != nil {
 		defer conn.Close()
-		log.Debugf("TCP Port %s is open.", net.JoinHostPort(host, port))
+		log.Debugf("[%s] TCP Port %s is open.", filterName, net.JoinHostPort(i.IpAddress, port))
 		return true
 	}
 	return false

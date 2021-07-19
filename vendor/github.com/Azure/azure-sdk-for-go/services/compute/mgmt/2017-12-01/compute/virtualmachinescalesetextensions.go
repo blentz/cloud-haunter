@@ -56,7 +56,7 @@ func (client VirtualMachineScaleSetExtensionsClient) CreateOrUpdate(ctx context.
 
 	result, err = client.CreateOrUpdateSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetExtensionsClient", "CreateOrUpdate", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetExtensionsClient", "CreateOrUpdate", nil, "Failure sending request")
 		return
 	}
 
@@ -139,7 +139,7 @@ func (client VirtualMachineScaleSetExtensionsClient) Delete(ctx context.Context,
 
 	result, err = client.DeleteSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetExtensionsClient", "Delete", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetExtensionsClient", "Delete", nil, "Failure sending request")
 		return
 	}
 

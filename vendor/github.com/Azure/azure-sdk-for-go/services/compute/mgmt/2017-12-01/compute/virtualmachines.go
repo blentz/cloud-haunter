@@ -64,7 +64,7 @@ func (client VirtualMachinesClient) Capture(ctx context.Context, resourceGroupNa
 
 	result, err = client.CaptureSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Capture", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Capture", nil, "Failure sending request")
 		return
 	}
 
@@ -146,7 +146,7 @@ func (client VirtualMachinesClient) ConvertToManagedDisks(ctx context.Context, r
 
 	result, err = client.ConvertToManagedDisksSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "ConvertToManagedDisks", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "ConvertToManagedDisks", nil, "Failure sending request")
 		return
 	}
 
@@ -247,7 +247,7 @@ func (client VirtualMachinesClient) CreateOrUpdate(ctx context.Context, resource
 
 	result, err = client.CreateOrUpdateSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "CreateOrUpdate", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "CreateOrUpdate", nil, "Failure sending request")
 		return
 	}
 
@@ -330,7 +330,7 @@ func (client VirtualMachinesClient) Deallocate(ctx context.Context, resourceGrou
 
 	result, err = client.DeallocateSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Deallocate", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Deallocate", nil, "Failure sending request")
 		return
 	}
 
@@ -409,7 +409,7 @@ func (client VirtualMachinesClient) Delete(ctx context.Context, resourceGroupNam
 
 	result, err = client.DeleteSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Delete", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Delete", nil, "Failure sending request")
 		return
 	}
 
@@ -1229,7 +1229,7 @@ func (client VirtualMachinesClient) PerformMaintenance(ctx context.Context, reso
 
 	result, err = client.PerformMaintenanceSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "PerformMaintenance", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "PerformMaintenance", nil, "Failure sending request")
 		return
 	}
 
@@ -1309,7 +1309,7 @@ func (client VirtualMachinesClient) PowerOff(ctx context.Context, resourceGroupN
 
 	result, err = client.PowerOffSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "PowerOff", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "PowerOff", nil, "Failure sending request")
 		return
 	}
 
@@ -1388,7 +1388,7 @@ func (client VirtualMachinesClient) Redeploy(ctx context.Context, resourceGroupN
 
 	result, err = client.RedeploySender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Redeploy", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Redeploy", nil, "Failure sending request")
 		return
 	}
 
@@ -1467,7 +1467,7 @@ func (client VirtualMachinesClient) Restart(ctx context.Context, resourceGroupNa
 
 	result, err = client.RestartSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Restart", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Restart", nil, "Failure sending request")
 		return
 	}
 
@@ -1553,7 +1553,7 @@ func (client VirtualMachinesClient) RunCommand(ctx context.Context, resourceGrou
 
 	result, err = client.RunCommandSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "RunCommand", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "RunCommand", nil, "Failure sending request")
 		return
 	}
 
@@ -1634,7 +1634,7 @@ func (client VirtualMachinesClient) Start(ctx context.Context, resourceGroupName
 
 	result, err = client.StartSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Start", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Start", nil, "Failure sending request")
 		return
 	}
 
@@ -1714,7 +1714,7 @@ func (client VirtualMachinesClient) Update(ctx context.Context, resourceGroupNam
 
 	result, err = client.UpdateSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Update", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachinesClient", "Update", nil, "Failure sending request")
 		return
 	}
 

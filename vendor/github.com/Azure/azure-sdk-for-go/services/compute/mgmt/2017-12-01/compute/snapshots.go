@@ -77,7 +77,7 @@ func (client SnapshotsClient) CreateOrUpdate(ctx context.Context, resourceGroupN
 
 	result, err = client.CreateOrUpdateSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.SnapshotsClient", "CreateOrUpdate", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.SnapshotsClient", "CreateOrUpdate", nil, "Failure sending request")
 		return
 	}
 
@@ -160,7 +160,7 @@ func (client SnapshotsClient) Delete(ctx context.Context, resourceGroupName stri
 
 	result, err = client.DeleteSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.SnapshotsClient", "Delete", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.SnapshotsClient", "Delete", nil, "Failure sending request")
 		return
 	}
 
@@ -324,7 +324,7 @@ func (client SnapshotsClient) GrantAccess(ctx context.Context, resourceGroupName
 
 	result, err = client.GrantAccessSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.SnapshotsClient", "GrantAccess", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.SnapshotsClient", "GrantAccess", nil, "Failure sending request")
 		return
 	}
 
@@ -635,7 +635,7 @@ func (client SnapshotsClient) RevokeAccess(ctx context.Context, resourceGroupNam
 
 	result, err = client.RevokeAccessSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.SnapshotsClient", "RevokeAccess", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.SnapshotsClient", "RevokeAccess", nil, "Failure sending request")
 		return
 	}
 
@@ -716,7 +716,7 @@ func (client SnapshotsClient) Update(ctx context.Context, resourceGroupName stri
 
 	result, err = client.UpdateSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.SnapshotsClient", "Update", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.SnapshotsClient", "Update", nil, "Failure sending request")
 		return
 	}
 

@@ -55,7 +55,7 @@ func (client VirtualMachineScaleSetRollingUpgradesClient) Cancel(ctx context.Con
 
 	result, err = client.CancelSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetRollingUpgradesClient", "Cancel", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetRollingUpgradesClient", "Cancel", nil, "Failure sending request")
 		return
 	}
 
@@ -211,7 +211,7 @@ func (client VirtualMachineScaleSetRollingUpgradesClient) StartOSUpgrade(ctx con
 
 	result, err = client.StartOSUpgradeSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetRollingUpgradesClient", "StartOSUpgrade", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.VirtualMachineScaleSetRollingUpgradesClient", "StartOSUpgrade", nil, "Failure sending request")
 		return
 	}
 

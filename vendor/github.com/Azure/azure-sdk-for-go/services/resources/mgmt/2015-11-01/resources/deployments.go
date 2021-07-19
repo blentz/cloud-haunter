@@ -307,7 +307,7 @@ func (client DeploymentsClient) CreateOrUpdate(ctx context.Context, resourceGrou
 
 	result, err = client.CreateOrUpdateSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "resources.DeploymentsClient", "CreateOrUpdate", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "resources.DeploymentsClient", "CreateOrUpdate", nil, "Failure sending request")
 		return
 	}
 
@@ -397,7 +397,7 @@ func (client DeploymentsClient) Delete(ctx context.Context, resourceGroupName st
 
 	result, err = client.DeleteSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "resources.DeploymentsClient", "Delete", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "resources.DeploymentsClient", "Delete", nil, "Failure sending request")
 		return
 	}
 

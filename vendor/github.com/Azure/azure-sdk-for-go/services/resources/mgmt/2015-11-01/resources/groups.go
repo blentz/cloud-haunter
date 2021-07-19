@@ -231,7 +231,7 @@ func (client GroupsClient) Delete(ctx context.Context, resourceGroupName string)
 
 	result, err = client.DeleteSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "resources.GroupsClient", "Delete", result.Response(), "Failure sending request")
+		err = autorest.NewErrorWithError(err, "resources.GroupsClient", "Delete", nil, "Failure sending request")
 		return
 	}
 

@@ -1062,7 +1062,7 @@ func (p gcpProvider) getDatabases(aggregator *sqladmin.InstancesListCall) ([]*ty
 	for _, databaseInstance := range gDatabaseList.Items {
 		instanceName := databaseInstance.Name
 
-		listOperationCall := p.sqlClient.Operations.List(p.projectID, instanceName)
+		listOperationCall := p.sqlClient.Operations.List(p.projectID)
 		creationTimeStamp, err := getDatabaseInstanceCreationTimeStamp(listOperationCall, instanceName)
 		if err != nil {
 			log.Errorf("[GCP] Failed to get the creation timestamp of the DB: %s, err: %s", instanceName, err.Error())

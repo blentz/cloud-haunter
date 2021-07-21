@@ -15,7 +15,7 @@ type ownerless struct {
 }
 
 func (o ownerless) Execute(items []types.CloudItem) []types.CloudItem {
-	log.Debugf("[OWNERLESS] Filtering instances without tag %s (%d): [%s]", ctx.OwnerLabel, len(items), items)
+	log.Debugf("[OWNERLESS] Filtering items without tag %s (%d): [%s]", ctx.OwnerLabel, len(items), items)
 	return filter("OWNERLESS", items, types.ExclusiveFilter, func(item types.CloudItem) bool {
 		switch item.GetItem().(type) {
 		case types.Instance:
@@ -31,6 +31,15 @@ func (o ownerless) Execute(items []types.CloudItem) []types.CloudItem {
 			stack := item.(*types.Stack)
 			match := !utils.IsAnyMatch(stack.Tags, ctx.OwnerLabel)
 			log.Debugf("[OWNERLESS] Stack: %s match: %v", stack.Name, match)
+			return match
+		case types.Cluster:
+			if item.GetItem().(types.Cluster).State != types.Running {
+				log.Debugf("[OWNERLESS] Filter cluster, because it's not in RUNNING state: %s", item.GetName())
+				return false
+			}
+			clust := item.(*types.Cluster)
+			match := !utils.IsAnyMatch(clust.Tags, ctx.OwnerLabel)
+			log.Debugf("[OWNERLESS] Cluster: %s match: %v (%s)", clust.Name, match, clust.State)
 			return match
 		default:
 			log.Fatalf("[OWNERLESS] Filter does not apply for cloud item: %s", item.GetName())

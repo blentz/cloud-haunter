@@ -21,6 +21,9 @@ const (
 
 	// Stacks operation to return all stack (CF, ARM..)
 	Stacks = OpType("getStacks")
+
+	// Clusters operation to return all clusters
+	Clusters = OpType("getClusters")
 )
 
 // OpType type of the operation

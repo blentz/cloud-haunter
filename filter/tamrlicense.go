@@ -32,7 +32,7 @@ func init() {
 }
 
 func (f tamrLicenseInputs) Execute(items []types.CloudItem) []types.CloudItem {
-	log.Debugf("[TAMR-LICENSE] Filtering instances (%d): [%s]", len(items), items)
+	log.Debugf("[TAMR-LICENSE] Filtering items (%d): [%s]", len(items), items)
 	return filter("TAMR-LICENSE", items, types.ExclusiveFilter, func(item types.CloudItem) bool {
 		switch item.GetItem().(type) {
 		case types.Instance:

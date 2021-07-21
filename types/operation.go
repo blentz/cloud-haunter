@@ -24,6 +24,9 @@ const (
 
 	// Alerts operation to return all alerts (e.g. CloudWatch)
 	Alerts = OpType("getAlerts")
+
+	// Clusters operation to return all clusters
+	Clusters = OpType("getClusters")
 )
 
 // OpType type of the operation

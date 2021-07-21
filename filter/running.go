@@ -37,6 +37,11 @@ func (f running) Execute(items []types.CloudItem) []types.CloudItem {
 				log.Debugf("[RUNNING] Filter disk, because it's in used state: %s", item.GetName())
 				return false
 			}
+		case types.Cluster:
+			if item.GetItem().(types.Cluster).State != types.Running {
+				log.Debugf("[LONGRUNNING] Filter instance, because it's not in RUNNING state: %s", item.GetName())
+				return false
+			}
 		default:
 			log.Fatalf("[RUNNING] Filter does not apply for cloud item: %s", item.GetName())
 		}

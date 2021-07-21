@@ -11,7 +11,6 @@ github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2015-11-01/resources
 github.com/Azure/azure-sdk-for-go/services/resources/mgmt/2015-11-01/subscriptions
 github.com/Azure/azure-sdk-for-go/version
 # github.com/Azure/go-autorest v14.2.0+incompatible
-## explicit
 github.com/Azure/go-autorest
 # github.com/Azure/go-autorest/autorest v0.11.19
 ## explicit
@@ -36,7 +35,7 @@ github.com/Azure/go-autorest/autorest/validation
 github.com/Azure/go-autorest/logger
 # github.com/Azure/go-autorest/tracing v0.6.0
 github.com/Azure/go-autorest/tracing
-# github.com/aws/aws-sdk-go v1.40.3
+# github.com/aws/aws-sdk-go v1.40.4
 ## explicit
 github.com/aws/aws-sdk-go/aws
 github.com/aws/aws-sdk-go/aws/awserr
@@ -87,14 +86,10 @@ github.com/aws/aws-sdk-go/service/sts
 github.com/aws/aws-sdk-go/service/sts/stsiface
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
-# github.com/dgrijalva/jwt-go v3.2.0+incompatible
-## explicit
 # github.com/dimchansky/utfbom v1.1.1
 github.com/dimchansky/utfbom
 # github.com/form3tech-oss/jwt-go v3.2.2+incompatible
 github.com/form3tech-oss/jwt-go
-# github.com/go-sql-driver/mysql v1.5.0
-## explicit
 # github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e
 github.com/golang/groupcache/lru
 # github.com/golang/protobuf v1.5.2
@@ -104,7 +99,6 @@ github.com/golang/protobuf/ptypes/any
 github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/timestamp
 # github.com/google/go-cmp v0.5.6
-## explicit
 github.com/google/go-cmp/cmp
 github.com/google/go-cmp/cmp/internal/diff
 github.com/google/go-cmp/cmp/internal/flags
@@ -113,18 +107,12 @@ github.com/google/go-cmp/cmp/internal/value
 # github.com/google/go-querystring v0.0.0-20170111101155-53e6ce116135
 ## explicit
 github.com/google/go-querystring/query
-# github.com/googleapis/gax-go v1.0.3
-## explicit
 # github.com/googleapis/gax-go/v2 v2.0.5
 github.com/googleapis/gax-go/v2
 # github.com/jmespath/go-jmespath v0.4.0
 github.com/jmespath/go-jmespath
 # github.com/mitchellh/go-homedir v1.1.0
 github.com/mitchellh/go-homedir
-# github.com/onsi/ginkgo v1.10.1
-## explicit
-# github.com/onsi/gomega v1.7.0
-## explicit
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
 # github.com/sirupsen/logrus v1.8.1
@@ -139,7 +127,6 @@ github.com/stretchr/testify/suite
 ## explicit
 github.com/tbruyelle/hipchat-go/hipchat
 # go.opencensus.io v0.23.0
-## explicit
 go.opencensus.io
 go.opencensus.io/internal
 go.opencensus.io/internal/tagencoding
@@ -315,10 +302,6 @@ google.golang.org/protobuf/types/known/durationpb
 google.golang.org/protobuf/types/known/emptypb
 google.golang.org/protobuf/types/known/fieldmaskpb
 google.golang.org/protobuf/types/known/timestamppb
-# gopkg.in/airbrake/gobrake.v2 v2.0.9
-## explicit
-# gopkg.in/gemnasium/logrus-airbrake-hook.v2 v2.1.2
-## explicit
 # gopkg.in/yaml.v2 v2.4.0
 ## explicit
 gopkg.in/yaml.v2

@@ -54,7 +54,7 @@ formatcheck:
 	([ -z "$(shell gofmt -d $(GOFILES_NOVENDOR))" ]) || (echo "Source is unformatted"; exit 1)
 
 format:
-	gofmt -s -w $(GOFILES_NOVENDOR)
+	gofmt -e -l -s -w $(GOFILES_NOVENDOR)
 
 vet:
 	GO111MODULE=on go vet -mod=vendor ./...

@@ -36,4 +36,5 @@ type CloudProvider interface {
 	GetImages() ([]*Image, error)
 	DeleteImages(*ImageContainer) []error
 	GetStacks() ([]*Stack, error)
+	GetClusters() ([]*Cluster, error)
 }

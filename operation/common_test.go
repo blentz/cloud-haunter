@@ -112,3 +112,7 @@ func (p dummyProvider) DeleteImages(*types.ImageContainer) []error {
 func (p dummyProvider) TerminateStacks(*types.StackContainer) []error {
 	return nil
 }
+
+func (p dummyProvider) GetClusters() ([]*types.Cluster, error) {
+	return nil, nil
+}

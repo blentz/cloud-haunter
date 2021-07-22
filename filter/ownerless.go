@@ -34,12 +34,12 @@ func (o ownerless) Execute(items []types.CloudItem) []types.CloudItem {
 			return match
 		case types.Cluster:
 			if item.GetItem().(types.Cluster).State != types.Running {
-				log.Debugf("[LONGRUNNING] Filter instance, because it's not in RUNNING state: %s", item.GetName())
+				log.Debugf("[OWNERLESS] Filter instance, because it's not in RUNNING state: %s", item.GetName())
 				return false
 			}
 			clust := item.(*types.Cluster)
 			match := !utils.IsAnyMatch(clust.Tags, ctx.OwnerLabel)
-			log.Debugf("[OWNERLESS] Instance: %s match: %v (%s)", inst.Name, match, inst.State)
+			log.Debugf("[OWNERLESS] Cluster: %s match: %v (%s)", clust.Name, match, clust.State)
 			return match
 		default:
 			log.Fatalf("[OWNERLESS] Filter does not apply for cloud item: %s", item.GetName())

@@ -31,7 +31,7 @@ type Cluster struct {
 	Created   time.Time                 `json:"Created"`
 	CloudType CloudType                 `json:"CloudType"`
 	Region    string                    `json:"Region"`
-	Labels    map[string]string         `json:"Labels"`
+	Tags      map[string]string         `json:"Labels"`
 	Config    *dataprocpb.ClusterConfig `json:"ClusterConfig"`
 	State     State
 }
@@ -43,10 +43,10 @@ func (cluster Cluster) GetName() string {
 
 // GetOwner returns the owner of the cluster
 func (cluster Cluster) GetOwner() string {
-	if val, ok := cluster.Labels["Owner"]; ok {
+	if val, ok := cluster.Tags["Owner"]; ok {
 		return val
 	}
-	if val, ok := cluster.Labels["owner"]; ok {
+	if val, ok := cluster.Tags["owner"]; ok {
 		return val
 	}
 	return ""

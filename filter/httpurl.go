@@ -28,7 +28,7 @@ func init() {
 }
 
 func (f httpUrl) Execute(items []types.CloudItem) []types.CloudItem {
-	log.Debugf("[HTTPURL] Filtering instances (%d): [%s]", len(items), items)
+	log.Debugf("[HTTPURL] Filtering items (%d): [%s]", len(items), items)
 	return filter("HTTPURL", items, types.ExclusiveFilter, func(item types.CloudItem) bool {
 		switch item.GetItem().(type) {
 		case types.Instance:

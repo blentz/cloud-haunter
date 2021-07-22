@@ -24,7 +24,7 @@ func (f stopped) Execute(items []types.CloudItem) []types.CloudItem {
 			}
 		case types.Cluster:
 			if item.GetItem().(types.Cluster).State != types.Stopped {
-				log.Debugf("[LONGRUNNING] Filter instance, because it's not in STOPPED state: %s", item.GetName())
+				log.Debugf("[RUNNING] Filter cluster, because it's not in STOPPED state: %s", item.GetName())
 				return false
 			}
 		default:

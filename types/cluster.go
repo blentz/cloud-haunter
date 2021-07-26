@@ -31,9 +31,9 @@ type Cluster struct {
 	Created   time.Time                 `json:"Created"`
 	CloudType CloudType                 `json:"CloudType"`
 	Region    string                    `json:"Region"`
-	Tags      map[string]string         `json:"Labels"`
+	Tags      map[string]string         `json:"Tags"`
 	Config    *dataprocpb.ClusterConfig `json:"ClusterConfig"`
-	State     State
+        State     State                     `json:"State"`
 }
 
 // GetName returns the name of the cluster

@@ -120,3 +120,7 @@ func (p dummyProvider) GetAlerts() ([]*types.Alert, error) {
 func (p dummyProvider) DeleteAlerts(*types.AlertContainer) []error {
 	return nil
 }
+
+func (p dummyProvider) GetClusters() ([]*types.Cluster, error) {
+	return nil, nil
+}

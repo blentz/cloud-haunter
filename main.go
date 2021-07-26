@@ -129,7 +129,7 @@ VERSION:`)
 	println("   " + ctx.Version)
 	println(`
 AUTHOR(S):
-   Hortonworks
+   Hortonworks, Tamr
 OPERATIONS:`)
 	for ot := range ctx.Operations {
 		println("\t-o " + ot.String())

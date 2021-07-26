@@ -561,3 +561,7 @@ func newStack(rg resources.Group) *types.Stack {
 		Region:    *rg.Location,
 	}
 }
+
+func (p azureProvider) GetClusters() ([]*types.Cluster, error) {
+	return nil, errors.New("NotImplemented")
+}

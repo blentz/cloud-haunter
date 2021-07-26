@@ -75,6 +75,10 @@ func (p *mockProvider) DeleteAlerts(*types.AlertContainer) []error {
 	return nil
 }
 
+func (p *mockProvider) GetClusters() ([]*types.Cluster, error) {
+	return nil, nil
+}
+
 type terminationSuite struct {
 	suite.Suite
 	providers    map[types.CloudType]func() types.CloudProvider

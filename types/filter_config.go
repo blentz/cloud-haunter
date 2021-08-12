@@ -88,6 +88,7 @@ func (filterConfig FilterConfig) GetFilterValues(fType FilterEntityType, cloud C
 	}
 	return nil
 }
+
 // FilterClusterConfig filter properties for instances
 type FilterClusterConfig struct {
 	Aws struct {

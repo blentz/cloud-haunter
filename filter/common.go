@@ -59,17 +59,22 @@ func isFilterMatch(filterName string, item types.CloudItem, filterType types.Fil
 			filterEntityType = types.IncludeAccess
 		} else {
 			filterEntityType = types.ExcludeAccess
-		accessFilter, _, _ := getFilterConfigs(filterConfig, filterType)
-		if accessFilter != nil {
-			switch item.GetCloudType() {
-			case types.AWS:
-				return isNameOrOwnerMatch(filterName, item, accessFilter.Aws.Names, accessFilter.Aws.Owners)
-			case types.AZURE:
-				return isNameOrOwnerMatch(filterName, item, accessFilter.Azure.Names, accessFilter.Azure.Owners)
-			case types.GCP:
-				return isNameOrOwnerMatch(filterName, item, accessFilter.Gcp.Names, accessFilter.Gcp.Owners)
-			default:
-				log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+			accessFilter, _, _ := getFilterConfigs(filterConfig, filterType)
+			if accessFilter != nil {
+				switch item.GetCloudType() {
+				case types.AWS:
+					return isNameOrOwnerMatch(filterName, item, accessFilter.Aws.Names, accessFilter.Aws.Owners)
+				case types.AZURE:
+					return isNameOrOwnerMatch(filterName, item, accessFilter.Azure.Names, accessFilter.Azure.Owners)
+				case types.GCP:
+					return isNameOrOwnerMatch(filterName, item, accessFilter.Gcp.Names, accessFilter.Gcp.Owners)
+				default:
+					log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+				}
+			}
+			filtered, applied := applyFilterConfig(filterConfig, filterType, item, filterName, types.Tags{})
+			if applied {
+				return filtered
 			}
 		}
 	case types.Database:
@@ -130,24 +135,49 @@ func isFilterMatch(filterName string, item types.CloudItem, filterType types.Fil
 	if names := filterConfig.GetFilterValues(filterEntityType, item.GetCloudType(), types.Name); names != nil {
 		log.Debugf("[%s] filtering item %s to names [%s]", filterName, item.GetName(), names)
 		filtered, applied = filtered || utils.IsStartsWith(item.GetName(), names...), true
-        }
+	}
 }
 
 func applyFilterConfig(filterConfig *types.FilterConfig, filterType types.FilterConfigType, item types.CloudItem, filterName string, tags types.Tags) (applied, filtered bool) {
-	_, instanceFilter, _ := getFilterConfigs(filterConfig, filterType)
-	if instanceFilter != nil {
-		switch item.GetCloudType() {
-		case types.AWS:
-			return isMatchWithIgnores(filterName, item, tags,
-				instanceFilter.Aws.Names, instanceFilter.Aws.Owners, instanceFilter.Aws.Labels), true
-		case types.AZURE:
-			return isMatchWithIgnores(filterName, item, tags,
-				instanceFilter.Azure.Names, instanceFilter.Azure.Owners, instanceFilter.Azure.Labels), true
-		case types.GCP:
-			return isMatchWithIgnores(filterName, item, tags,
-				instanceFilter.Gcp.Names, instanceFilter.Gcp.Owners, instanceFilter.Gcp.Labels), true
-		default:
-			log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+	accessFilter, instanceFilter, clusterFilter := getFilterConfigs(filterConfig, filterType)
+	switch item.GetItem().(type) {
+	case types.Instance:
+		if instanceFilter != nil {
+			switch item.GetCloudType() {
+			case types.AWS:
+				return isMatchWithIgnores(filterName, item, tags,
+					instanceFilter.Aws.Names, instanceFilter.Aws.Owners, instanceFilter.Aws.Labels), true
+			case types.AZURE:
+				return isMatchWithIgnores(filterName, item, tags,
+					instanceFilter.Azure.Names, instanceFilter.Azure.Owners, instanceFilter.Azure.Labels), true
+			case types.GCP:
+				return isMatchWithIgnores(filterName, item, tags,
+					instanceFilter.Gcp.Names, instanceFilter.Gcp.Owners, instanceFilter.Gcp.Labels), true
+			default:
+				log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+			}
+		}
+	case types.Access:
+		if accessFilter != nil {
+			switch item.GetCloudType() {
+			case types.AWS:
+				return isNameOrOwnerMatch(filterName, item, accessFilter.Aws.Names, accessFilter.Aws.Owners), true
+			case types.AZURE:
+				return isNameOrOwnerMatch(filterName, item, accessFilter.Azure.Names, accessFilter.Azure.Owners), true
+			case types.GCP:
+				return isNameOrOwnerMatch(filterName, item, accessFilter.Gcp.Names, accessFilter.Gcp.Owners), true
+			default:
+				log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+			}
+		}
+	case types.Cluster:
+		if clusterFilter != nil {
+			switch item.GetCloudType() {
+			case types.GCP:
+				return isNameOrOwnerMatch(filterName, item, clusterFilter.Gcp.Names, clusterFilter.Gcp.Owners), true
+			default:
+				log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+			}
 		}
 	}
 
@@ -161,18 +191,6 @@ func applyFilterConfig(filterConfig *types.FilterConfig, filterType types.Filter
 		}
 		filtered, applied = filtered || ownerMatch, true
 	}
-}
-
-func getFilterConfigs(filterConfig *types.FilterConfig, filterType types.FilterConfigType) (accessConfig *types.FilterAccessConfig, instanceConfig *types.FilterInstanceConfig, clusterConfig *types.FilterClusterConfig) {
-	if filterConfig != nil {
-		if filterType.IsInclusive() {
-			return filterConfig.IncludeAccess, filterConfig.IncludeInstance, filterConfig.IncludeCluster
-		}
-		return filterConfig.ExcludeAccess, filterConfig.ExcludeInstance, filterConfig.ExcludeCluster
-	}
-	return nil, nil, nil
-}
-
 	if labels := filterConfig.GetFilterValues(filterEntityType, item.GetCloudType(), types.Label); labels != nil {
 		log.Debugf("[%s] filtering item %s to labels [%s]", filterName, item.GetName(), labels)
 		filtered, applied = filtered || utils.IsAnyStartsWith(item.GetTags(), labels...), true
@@ -185,9 +203,18 @@ func getFilterConfigs(filterConfig *types.FilterConfig, filterType types.FilterC
 			log.Debugf("[%s] item %s does not match filter", filterName, item.GetName())
 		}
 		return filtered
-	} else {
-		log.Debugf("[%s] item %s could not be filtered", filterName, item.GetName())
 	}
 
+	log.Debugf("[%s] item %s could not be filtered", filterName, item.GetName())
 	return false
+}
+
+func getFilterConfigs(filterConfig *types.FilterConfig, filterType types.FilterConfigType) (accessConfig *types.FilterAccessConfig, instanceConfig *types.FilterInstanceConfig, clusterConfig *types.FilterClusterConfig) {
+	if filterConfig != nil {
+		if filterType.IsInclusive() {
+			return filterConfig.IncludeAccess, filterConfig.IncludeInstance, filterConfig.IncludeCluster
+		}
+		return filterConfig.ExcludeAccess, filterConfig.ExcludeInstance, filterConfig.ExcludeCluster
+	}
+	return nil, nil, nil
 }

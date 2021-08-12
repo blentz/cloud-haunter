@@ -73,18 +73,9 @@ func isFilterMatch(filterName string, item types.CloudItem, filterType types.Fil
 			return filtered
 		}
 	case types.Access:
-		accessFilter, _, _ := getFilterConfigs(filterConfig, filterType)
-		if accessFilter != nil {
-			switch item.GetCloudType() {
-			case types.AWS:
-				return isNameOrOwnerMatch(filterName, item, accessFilter.Aws.Names, accessFilter.Aws.Owners)
-			case types.AZURE:
-				return isNameOrOwnerMatch(filterName, item, accessFilter.Azure.Names, accessFilter.Azure.Owners)
-			case types.GCP:
-				return isNameOrOwnerMatch(filterName, item, accessFilter.Gcp.Names, accessFilter.Gcp.Owners)
-			default:
-				log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
-			}
+		filtered, applied := applyFilterConfig(filterConfig, filterType, item, filterName, types.Tags{})
+		if applied {
+			return filtered
 		}
 	case types.Database:
 		database := item.GetItem().(types.Database)
@@ -138,20 +129,45 @@ func isFilterMatch(filterName string, item types.CloudItem, filterType types.Fil
 }
 
 func applyFilterConfig(filterConfig *types.FilterConfig, filterType types.FilterConfigType, item types.CloudItem, filterName string, tags types.Tags) (applied, filtered bool) {
-	_, instanceFilter, _ := getFilterConfigs(filterConfig, filterType)
-	if instanceFilter != nil {
-		switch item.GetCloudType() {
-		case types.AWS:
-			return isMatchWithIgnores(filterName, item, tags,
-				instanceFilter.Aws.Names, instanceFilter.Aws.Owners, instanceFilter.Aws.Labels), true
-		case types.AZURE:
-			return isMatchWithIgnores(filterName, item, tags,
-				instanceFilter.Azure.Names, instanceFilter.Azure.Owners, instanceFilter.Azure.Labels), true
-		case types.GCP:
-			return isMatchWithIgnores(filterName, item, tags,
-				instanceFilter.Gcp.Names, instanceFilter.Gcp.Owners, instanceFilter.Gcp.Labels), true
-		default:
-			log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+	accessFilter, instanceFilter, clusterFilter := getFilterConfigs(filterConfig, filterType)
+	switch item.GetItem().(type) {
+	case types.Instance:
+		if instanceFilter != nil {
+			switch item.GetCloudType() {
+			case types.AWS:
+				return isMatchWithIgnores(filterName, item, tags,
+					instanceFilter.Aws.Names, instanceFilter.Aws.Owners, instanceFilter.Aws.Labels), true
+			case types.AZURE:
+				return isMatchWithIgnores(filterName, item, tags,
+					instanceFilter.Azure.Names, instanceFilter.Azure.Owners, instanceFilter.Azure.Labels), true
+			case types.GCP:
+				return isMatchWithIgnores(filterName, item, tags,
+					instanceFilter.Gcp.Names, instanceFilter.Gcp.Owners, instanceFilter.Gcp.Labels), true
+			default:
+				log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+			}
+		}
+	case types.Access:
+		if accessFilter != nil {
+			switch item.GetCloudType() {
+			case types.AWS:
+				return isNameOrOwnerMatch(filterName, item, accessFilter.Aws.Names, accessFilter.Aws.Owners), true
+			case types.AZURE:
+				return isNameOrOwnerMatch(filterName, item, accessFilter.Azure.Names, accessFilter.Azure.Owners), true
+			case types.GCP:
+				return isNameOrOwnerMatch(filterName, item, accessFilter.Gcp.Names, accessFilter.Gcp.Owners), true
+			default:
+				log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+			}
+		}
+	case types.Cluster:
+		if clusterFilter != nil {
+			switch item.GetCloudType() {
+			case types.GCP:
+				return isNameOrOwnerMatch(filterName, item, clusterFilter.Gcp.Names, clusterFilter.Gcp.Owners), true
+			default:
+				log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+			}
 		}
 	}
 	return false, false

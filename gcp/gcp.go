@@ -1207,13 +1207,15 @@ func getClusters(listClusters *dataproc.ClusterIterator, region string) ([]*type
 
 func newCluster(cluster *dataprocpb.Cluster, region string) *types.Cluster {
 	log.Debugf("[GET_CLUSTERS] %+s in %s has status: %+s", cluster.ClusterName, region, cluster.Status.State)
+	tags := convertTags(cluster.Labels)
 	return &types.Cluster{
 		Name:      cluster.ClusterName,
 		Uuid:      cluster.ClusterUuid,
 		Created:   cluster.Status.StateStartTime.AsTime(),
 		CloudType: types.GCP,
 		Region:    region,
-		Tags:      convertTags(cluster.Labels),
+		Tags:      tags,
+		Owner:     tags[ctx.OwnerLabel],
 		Config:    cluster.GetConfig(),
 		State:     getClusterState(cluster.Status.GetState()),
 	}

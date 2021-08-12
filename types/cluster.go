@@ -33,7 +33,8 @@ type Cluster struct {
 	Region    string                    `json:"Region"`
 	Tags      map[string]string         `json:"Tags"`
 	Config    *dataprocpb.ClusterConfig `json:"ClusterConfig"`
-        State     State                     `json:"State"`
+	State     State                     `json:"State"`
+	Owner     string                    `json:"Owner"`
 }
 
 // GetName returns the name of the cluster

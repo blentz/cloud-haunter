@@ -170,3 +170,22 @@ type FilterStackConfig struct {
 		Owners []string `yaml:"owners"`
 	} `yaml:"gcp"`
 }
+
+// FilterClusterConfig filter properties for instances
+type FilterClusterConfig struct {
+	Aws struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"aws"`
+	Azure struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"azure"`
+	Gcp struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"gcp"`
+}

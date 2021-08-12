@@ -39,6 +39,15 @@ func TestIsIgnored(t *testing.T) {
 			Name:      "ignored-by-owner",
 			Owner:     "skipThisOwner-0",
 		},
+		&types.Cluster{
+			CloudType: types.GCP,
+			Name:      "skipThisCluster-0",
+		},
+		&types.Cluster{
+			CloudType: types.GCP,
+			Name:      "ignored-by-owner",
+			Owner:     "skipThisOwner-0",
+		},
 	}
 	filterConfig, _ := utils.LoadFilterConfig("testdata/sample-ignore.yml")
 
@@ -69,6 +78,15 @@ func TestIsIncluded(t *testing.T) {
 			Name:      "includeMeName-0",
 		},
 		&types.Access{
+			CloudType: types.AWS,
+			Name:      "included-by-owner",
+			Owner:     "includeMeOwner-0",
+		},
+		&types.Cluster{
+			CloudType: types.AWS,
+			Name:      "includeMeName-0",
+		},
+		&types.Cluster{
 			CloudType: types.AWS,
 			Name:      "included-by-owner",
 			Owner:     "includeMeOwner-0",

@@ -33,6 +33,8 @@ type FilterConfig struct {
 	IncludeAccess   *FilterAccessConfig   `yaml:"includeAccess"`
 	ExcludeInstance *FilterInstanceConfig `yaml:"excludeInstance"`
 	IncludeInstance *FilterInstanceConfig `yaml:"includeInstance"`
+	ExcludeCluster  *FilterClusterConfig  `yaml:"excludeCluster"`
+	IncludeCluster  *FilterClusterConfig  `yaml:"includeCluster"`
 }
 
 // FilterAccessConfig filter properties for access items
@@ -85,4 +87,22 @@ func (filterConfig FilterConfig) GetFilterValues(fType FilterEntityType, cloud C
 		}
 	}
 	return nil
+}
+// FilterClusterConfig filter properties for instances
+type FilterClusterConfig struct {
+	Aws struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"aws"`
+	Azure struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"azure"`
+	Gcp struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"gcp"`
 }

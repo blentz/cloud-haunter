@@ -10,6 +10,17 @@ excludeAccess:
     - skipThisAccess
     owners:
     - skipThisOwner
+excludeCluster:
+  aws: 
+    names: 
+      - skipThisAccess
+    owners: 
+      - skipThisOwner
+  azure:
+    names:
+    - skipThisAccess
+    owners:
+    - skipThisOwner
 excludeInstance:
   aws:
     names:
@@ -26,6 +37,17 @@ excludeInstance:
     labels:
     - skipThisLabel
 includeAccess:
+  aws:
+    names:
+      - includeMeName
+    owners:
+      - includeMeOwner
+  azure:
+    names:
+    - includeMeName
+    owners:
+    - includeMeOwner
+includeCluster:
   aws:
     names:
       - includeMeName

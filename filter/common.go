@@ -59,6 +59,39 @@ func isFilterMatch(filterName string, item types.CloudItem, filterType types.Fil
 			filterEntityType = types.IncludeAccess
 		} else {
 			filterEntityType = types.ExcludeAccess
+		accessFilter, _, _ := getFilterConfigs(filterConfig, filterType)
+		if accessFilter != nil {
+			switch item.GetCloudType() {
+			case types.AWS:
+				return isNameOrOwnerMatch(filterName, item, accessFilter.Aws.Names, accessFilter.Aws.Owners)
+			case types.AZURE:
+				return isNameOrOwnerMatch(filterName, item, accessFilter.Azure.Names, accessFilter.Azure.Owners)
+			case types.GCP:
+				return isNameOrOwnerMatch(filterName, item, accessFilter.Gcp.Names, accessFilter.Gcp.Owners)
+			default:
+				log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+			}
+		}
+	case types.Database:
+		database := item.GetItem().(types.Database)
+		name := item.GetName()
+		ignoreLabelFound := utils.IsAnyMatch(database.Tags, ctx.IgnoreLabel)
+		if ignoreLabelFound {
+			log.Debugf("[%s] Found ignore label on item: %s, label: %s", filterName, name, ctx.IgnoreLabel)
+			if ctx.IgnoreLabelDisabled {
+				log.Debugf("[%s] Ignore label usage is disabled, continuing to apply filter on item: %s", filterName, name)
+			} else {
+				if filterType.IsInclusive() {
+					log.Debugf("[%s] inclusive filter applied on item: %s", filterName, name)
+					return false
+				}
+				log.Debugf("[%s] exclusive filter applied on item: %s", filterName, name)
+				return true
+			}
+		}
+		filtered, applied := applyFilterConfig(filterConfig, filterType, item, filterName, database.Tags)
+		if applied {
+			return filtered
 		}
 	case types.Instance, types.Stack, types.Database, types.Disk, types.Alert:
 		if filterType.IsInclusive() {
@@ -69,6 +102,27 @@ func isFilterMatch(filterName string, item types.CloudItem, filterType types.Fil
 	default:
 		log.Warnf("Filtering is not implemented for type %s", reflect.TypeOf(item))
 		return false
+	case types.Cluster:
+		clust := item.GetItem().(types.Cluster)
+		name := item.GetName()
+		ignoreLabelFound := utils.IsAnyMatch(clust.Tags, ctx.IgnoreLabel)
+		if ignoreLabelFound {
+			log.Debugf("[%s] Found ignore label on item: %s, label: %s", filterName, name, ctx.IgnoreLabel)
+			if ctx.IgnoreLabelDisabled {
+				log.Debugf("[%s] Ignore label usage is disabled, continuing to apply filter on item: %s", filterName, name)
+			} else {
+				if filterType.IsInclusive() {
+					log.Debugf("[%s] inclusive filter applied on item: %s", filterName, name)
+					return false
+				}
+				log.Debugf("[%s] exclusive filter applied on item: %s", filterName, name)
+				return true
+			}
+		}
+		filtered, applied := applyFilterConfig(filterConfig, filterType, item, filterName, clust.Tags)
+		if applied {
+			return filtered
+		}
 	}
 
 	filtered, applied := false, false
@@ -76,6 +130,25 @@ func isFilterMatch(filterName string, item types.CloudItem, filterType types.Fil
 	if names := filterConfig.GetFilterValues(filterEntityType, item.GetCloudType(), types.Name); names != nil {
 		log.Debugf("[%s] filtering item %s to names [%s]", filterName, item.GetName(), names)
 		filtered, applied = filtered || utils.IsStartsWith(item.GetName(), names...), true
+        }
+}
+
+func applyFilterConfig(filterConfig *types.FilterConfig, filterType types.FilterConfigType, item types.CloudItem, filterName string, tags types.Tags) (applied, filtered bool) {
+	_, instanceFilter, _ := getFilterConfigs(filterConfig, filterType)
+	if instanceFilter != nil {
+		switch item.GetCloudType() {
+		case types.AWS:
+			return isMatchWithIgnores(filterName, item, tags,
+				instanceFilter.Aws.Names, instanceFilter.Aws.Owners, instanceFilter.Aws.Labels), true
+		case types.AZURE:
+			return isMatchWithIgnores(filterName, item, tags,
+				instanceFilter.Azure.Names, instanceFilter.Azure.Owners, instanceFilter.Azure.Labels), true
+		case types.GCP:
+			return isMatchWithIgnores(filterName, item, tags,
+				instanceFilter.Gcp.Names, instanceFilter.Gcp.Owners, instanceFilter.Gcp.Labels), true
+		default:
+			log.Warnf("[%s] Cloud type not supported: %s", filterName, item.GetCloudType())
+		}
 	}
 
 	if owners := filterConfig.GetFilterValues(filterEntityType, item.GetCloudType(), types.Owner); owners != nil {
@@ -88,6 +161,17 @@ func isFilterMatch(filterName string, item types.CloudItem, filterType types.Fil
 		}
 		filtered, applied = filtered || ownerMatch, true
 	}
+}
+
+func getFilterConfigs(filterConfig *types.FilterConfig, filterType types.FilterConfigType) (accessConfig *types.FilterAccessConfig, instanceConfig *types.FilterInstanceConfig, clusterConfig *types.FilterClusterConfig) {
+	if filterConfig != nil {
+		if filterType.IsInclusive() {
+			return filterConfig.IncludeAccess, filterConfig.IncludeInstance, filterConfig.IncludeCluster
+		}
+		return filterConfig.ExcludeAccess, filterConfig.ExcludeInstance, filterConfig.ExcludeCluster
+	}
+	return nil, nil, nil
+}
 
 	if labels := filterConfig.GetFilterValues(filterEntityType, item.GetCloudType(), types.Label); labels != nil {
 		log.Debugf("[%s] filtering item %s to labels [%s]", filterName, item.GetName(), labels)

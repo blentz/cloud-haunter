@@ -41,6 +41,8 @@ type FilterConfig struct {
 	IncludeDisk     *FilterDiskConfig     `yaml:"includeDisk"`
 	ExcludeStack    *FilterStackConfig    `yaml:"excludeStack"`
 	IncludeStack    *FilterStackConfig    `yaml:"includeStack"`
+	ExcludeCluster  *FilterClusterConfig  `yaml:"excludeCluster"`
+	IncludeCluster  *FilterClusterConfig  `yaml:"includeCluster"`
 }
 
 // FilterAccessConfig filter properties for access items
@@ -154,6 +156,25 @@ type FilterDiskConfig struct {
 
 // FilterStackConfig filter properties for image items
 type FilterStackConfig struct {
+	Aws struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"aws"`
+	Azure struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"azure"`
+	Gcp struct {
+		Labels []string `yaml:"labels"`
+		Names  []string `yaml:"names"`
+		Owners []string `yaml:"owners"`
+	} `yaml:"gcp"`
+}
+
+// FilterClusterConfig filter properties for instances
+type FilterClusterConfig struct {
 	Aws struct {
 		Labels []string `yaml:"labels"`
 		Names  []string `yaml:"names"`

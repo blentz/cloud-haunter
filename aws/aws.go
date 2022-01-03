@@ -2037,3 +2037,7 @@ func getRegionFromAvailabilityZone(az *string) string {
 	}
 	return (*az)[0 : len(*az)-1]
 }
+
+func (p awsProvider) GetClusters() ([]*types.Cluster, error) {
+	return nil, errors.New("NotImplemented")
+}

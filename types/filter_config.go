@@ -45,6 +45,23 @@ type FilterConfig struct {
 	IncludeCluster  *FilterClusterConfig  `yaml:"includeCluster"`
 }
 
+func (filterConfig FilterConfig) GetFilterValues(fType FilterEntityType, cloud CloudType, property FilterConfigProperty) []string {
+	log.Debugf("fType: %s, cloud: %s, property :%s", fType, cloud, property)
+	typeProperty := strings.ToUpper(string(string(fType)[0])) + string(fType)[1:]
+	cloudProperty := string(string(cloud)[0]) + strings.ToLower(string(cloud)[1:])
+	propertyProperty := strings.ToUpper(string(string(property)[0])) + string(property)[1:] + "s"
+	log.Debugf("FilterEntityType: %s, CloudProperty: %s, FilterConfigProperty: %s", typeProperty, cloudProperty, propertyProperty)
+
+	if typeField := reflect.ValueOf(filterConfig).FieldByName(typeProperty); typeField.IsValid() && !typeField.IsNil() {
+		if cloudField := reflect.Indirect(typeField).FieldByName(cloudProperty); cloudField.IsValid() {
+			if propertyField := reflect.Indirect(cloudField).FieldByName(propertyProperty); propertyField.IsValid() {
+				return propertyField.Interface().([]string)
+			}
+		}
+	}
+	return nil
+}
+
 // FilterAccessConfig filter properties for access items
 type FilterAccessConfig struct {
 	Aws struct {
@@ -78,23 +95,6 @@ type FilterInstanceConfig struct {
 		Names  []string `yaml:"names"`
 		Owners []string `yaml:"owners"`
 	} `yaml:"gcp"`
-}
-
-func (filterConfig FilterConfig) GetFilterValues(fType FilterEntityType, cloud CloudType, property FilterConfigProperty) []string {
-	log.Debugf("fType: %s, cloud: %s, property :%s", fType, cloud, property)
-	typeProperty := strings.ToUpper(string(string(fType)[0])) + string(fType)[1:]
-	cloudProperty := string(string(cloud)[0]) + strings.ToLower(string(cloud)[1:])
-	propertyProperty := strings.ToUpper(string(string(property)[0])) + string(property)[1:] + "s"
-	log.Debugf("FilterEntityType: %s, CloudProperty: %s, FilterConfigProperty: %s", typeProperty, cloudProperty, propertyProperty)
-
-	if typeField := reflect.ValueOf(filterConfig).FieldByName(typeProperty); typeField.IsValid() && !typeField.IsNil() {
-		if cloudField := reflect.Indirect(typeField).FieldByName(cloudProperty); cloudField.IsValid() {
-			if propertyField := reflect.Indirect(cloudField).FieldByName(propertyProperty); propertyField.IsValid() {
-				return propertyField.Interface().([]string)
-			}
-		}
-	}
-	return nil
 }
 
 // FilterImageConfig filter properties for image items

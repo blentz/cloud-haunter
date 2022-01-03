@@ -112,10 +112,10 @@ func (i Instance) GetUrl(path string, port string) RemoteResponse {
 	}
 
 	log.Debugf("[GET_URL] Making HTTP request to %s", uri)
-        client := http.Client{
-            Timeout: 3 * time.Second,
-        }
-        resp, err := client.Get(uri)
+	client := http.Client{
+		Timeout: 3 * time.Second,
+	}
+	resp, err := client.Get(uri)
 	if err != nil {
 		log.Errorf("[GET_URL] Error fetching %s - %s", uri, err)
 		return RemoteResponse{0, "", nil}

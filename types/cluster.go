@@ -38,37 +38,41 @@ type Cluster struct {
 }
 
 // GetName returns the name of the cluster
-func (cluster Cluster) GetName() string {
-	return cluster.Name
+func (c Cluster) GetName() string {
+	return c.Name
 }
 
 // GetOwner returns the owner of the cluster
-func (cluster Cluster) GetOwner() string {
-	if val, ok := cluster.Tags["Owner"]; ok {
+func (c Cluster) GetOwner() string {
+	if val, ok := c.Tags["Owner"]; ok {
 		return val
 	}
-	if val, ok := cluster.Tags["owner"]; ok {
+	if val, ok := c.Tags["owner"]; ok {
 		return val
 	}
 	return ""
 }
 
 // GetCloudType returns the type of the cloud
-func (cluster Cluster) GetCloudType() CloudType {
-	return cluster.CloudType
+func (c Cluster) GetCloudType() CloudType {
+	return c.CloudType
 }
 
 // GetCreated returns the creation time of the cluster
-func (cluster Cluster) GetCreated() time.Time {
-	return cluster.Created
+func (c Cluster) GetCreated() time.Time {
+	return c.Created
 }
 
 // GetItem returns the cluster struct itself
-func (cluster Cluster) GetItem() interface{} {
-	return cluster
+func (c Cluster) GetItem() interface{} {
+	return c
 }
 
 // GetType returns the cluster's string representation
-func (cluster Cluster) GetType() string {
+func (c Cluster) GetType() string {
 	return "cluster"
+}
+
+func (c Cluster) GetTags() Tags {
+	return c.Tags
 }

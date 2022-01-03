@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	ctx "github.com/hortonworks/cloud-haunter/context"
-	"github.com/hortonworks/cloud-haunter/types"
-	"github.com/hortonworks/cloud-haunter/utils"
+	ctx "github.com/blentz/cloud-haunter/context"
+	"github.com/blentz/cloud-haunter/types"
+	"github.com/blentz/cloud-haunter/utils"
 	log "github.com/sirupsen/logrus"
 
 	"context"
@@ -1021,6 +1021,7 @@ func (p gcpProvider) getDisks() ([]*types.Disk, error) {
 				log.Errorf("[GCP] Failed to get the creation timestamp of disk, err: %s", err.Error())
 				return nil, err
 			}
+			tags := convertTags(gDisk.Labels)
 
 			var region string
 			switch {

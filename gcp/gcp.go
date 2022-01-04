@@ -811,7 +811,7 @@ type instancesListAggregator interface {
 }
 
 func getInstances(aggregator instancesListAggregator) ([]*types.Instance, error) {
-	instances := make([]*types.Instance, 0)
+	instances := []*types.Instance{}
 	instanceList, err := aggregator.Do()
 	if err != nil {
 		log.Errorf("[GCP] Failed to fetch the running instances, err: %s", err.Error())
@@ -956,6 +956,10 @@ func newInstance(inst *compute.Instance) *types.Instance {
 	if err != nil {
 		log.Warnf("[GCP] cannot convert time: %s, err: %s", inst.CreationTimestamp, err.Error())
 	}
+	ipAddr := ""
+	if len(inst.NetworkInterfaces) > 0 {
+		ipAddr = inst.NetworkInterfaces[len(inst.NetworkInterfaces)-1].NetworkIP
+	}
 	return &types.Instance{
 		Name:         inst.Name,
 		ID:           strconv.Itoa(int(inst.Id)),
@@ -967,7 +971,7 @@ func newInstance(inst *compute.Instance) *types.Instance {
 		Region:       getRegionFromZoneURL(&inst.Zone),
 		InstanceType: inst.MachineType[strings.LastIndex(inst.MachineType, "/")+1:],
 		State:        getInstanceState(inst),
-		IpAddress:    inst.NetworkInterfaces[0].NetworkIP,
+		IpAddress:    ipAddr,
 	}
 }
 

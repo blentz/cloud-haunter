@@ -1,26 +1,36 @@
---- 
+---
 excludeAccess:
-  aws: 
-    names: 
+  aws:
+    names:
       - skipThisAccess
-    owners: 
+    owners:
       - skipThisOwner
   azure:
     names:
-    - skipThisAccess
+      - skipThisAccess
     owners:
-    - skipThisOwner
+      - skipThisOwner
+  gcp:
+    names:
+      - skipThisAccess
+    owners:
+      - skipThisOwner
 excludeCluster:
-  aws: 
-    names: 
-      - skipThisAccess
-    owners: 
+  aws:
+    names:
+      - skipThisName
+    owners:
       - skipThisOwner
   azure:
     names:
-    - skipThisAccess
+      - skipThisName
     owners:
-    - skipThisOwner
+      - skipThisOwner
+  gcp:
+    names:
+      - skipThisName
+    owners:
+      - skipThisOwner
 excludeInstance:
   aws:
     names:
@@ -31,11 +41,18 @@ excludeInstance:
       - skipThisLabel
   azure:
     names:
-    - skipThisName
+      - skipThisName
     owners:
-    - skipThisOwner
+      - skipThisOwner
     labels:
-    - skipThisLabel
+      - skipThisLabel
+  gcp:
+    names:
+      - skipThisName
+    owners:
+      - skipThisOwner
+    labels:
+      - skipThisLabel
 includeAccess:
   aws:
     names:
@@ -44,9 +61,14 @@ includeAccess:
       - includeMeOwner
   azure:
     names:
-    - includeMeName
+      - includeMeName
     owners:
-    - includeMeOwner
+      - includeMeOwner
+  gcp:
+    names:
+      - includeMeName
+    owners:
+      - includeMeOwner
 includeCluster:
   aws:
     names:
@@ -55,9 +77,14 @@ includeCluster:
       - includeMeOwner
   azure:
     names:
-    - includeMeName
+      - includeMeName
     owners:
-    - includeMeOwner
+      - includeMeOwner
+  gcp:
+    names:
+      - includeMeName
+    owners:
+      - includeMeOwner
 includeInstance:
   aws:
     names:
@@ -68,8 +95,15 @@ includeInstance:
       - includeMeLabel
   azure:
     names:
-    - includeMeName
+      - includeMeName
     owners:
-    - includeMeOwner
+      - includeMeOwner
     labels:
-    - includeMeLabel
+      - includeMeLabel
+  gcp:
+    names:
+      - includeMeName
+    owners:
+      - includeMeOwner
+    labels:
+      - includeMeLabel

@@ -1042,7 +1042,6 @@ func (p gcpProvider) getDisks() ([]*types.Disk, error) {
 				log.Errorf("[GCP] Failed to get the creation timestamp of disk, err: %s", err.Error())
 				return nil, err
 			}
-			tags := convertTags(gDisk.Labels)
 
 			var region string
 			switch {
@@ -1211,15 +1210,14 @@ func getClusters(listClusters *dataproc.ClusterIterator, region string) ([]*type
 
 func newCluster(cluster *dataprocpb.Cluster, region string) *types.Cluster {
 	log.Debugf("[GET_CLUSTERS] %+s in %s has status: %+s", cluster.ClusterName, region, cluster.Status.State)
-	tags := convertTags(cluster.Labels)
 	return &types.Cluster{
 		Name:      cluster.ClusterName,
 		Uuid:      cluster.ClusterUuid,
 		Created:   cluster.Status.StateStartTime.AsTime(),
 		CloudType: types.GCP,
 		Region:    region,
-		Tags:      tags,
-		Owner:     tags[ctx.OwnerLabel],
+		Tags:      cluster.Labels,
+		Owner:     cluster.Labels[ctx.OwnerLabel],
 		Config:    cluster.GetConfig(),
 		State:     getClusterState(cluster.Status.GetState()),
 	}
@@ -1239,7 +1237,7 @@ func getClusterState(s dataprocpb.ClusterStatus_State) types.State {
 		8: types.Starting,
 	}
 
-	status, ok := statuses[s]
+	status, ok := statuses[int32(s)]
 	if !ok {
 		return types.Unknown
 	}

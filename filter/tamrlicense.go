@@ -44,21 +44,28 @@ func (f tamrLicenseInputs) Execute(items []types.CloudItem) []types.CloudItem {
 			log.Fatalf("[TAMR-LICENSE] Filter does not apply for cloud item: %s", item.GetName())
 			return false
 		}
-		version := item.GetItem().(types.Instance).GetUrl("TAMR-LICENSE", "/api/service/version", f.port)
-		if version.Error {
-			log.Debugf("[TAMR-LICENSE] Filter %s, because %s does not appear to be running Tamr, response: %+v", item.GetType(), item.GetName(), version)
-			return false // instance is not unlicensed; instance is probably not running tamr
+		response := item.GetItem().(types.Instance).GetUrl("/api/service/version", f.port)
+		if response.Code == 200 {
+			var version string
+			err := json.Unmarshal(*response.Json, &version)
+			if err != nil {
+				log.Debugf("[TAMR-LICENSE] Filter %s, because %s does not appear to be running Tamr, response: %+v", item.GetType(), item.GetName(), version)
+				return false // instance is not unlicensed; instance is probably not running tamr
+			}
+			// TODO: parse response and expose version number for filtering.
+			log.Debugf("[TAMR-LICENSE] %s %s is running Tamr, response: %+v", item.GetType(), item.GetName(), version)
 		} else {
-			log.Debugf("[TAMR-LICENSE] %s %s is running Tamr, response: %+v", item.GetType(), item.GetName(), version.Json)
+			log.Debugf("[TAMR-LICENSE] Filter %s, because %s does not appear to be running Tamr, response: %+v", item.GetType(), item.GetName(), response)
+			return false // instance is not unlicensed; instance is probably not running tamr
 		}
-		response := item.GetItem().(types.Instance).GetUrl("TAMR-LICENSE", f.path, f.port)
+		response = item.GetItem().(types.Instance).GetUrl(f.path, f.port)
 		switch response.Code {
 		case 999:
 			log.Debugf("[TAMR-LICENSE] Filter %s, because %s does not appear to be running Tamr, response: %+v", item.GetType(), item.GetName(), response)
 			return false // instance is not unlicensed; instance is probably not running tamr
 		case 200:
 			var tamrBody types.TamrResponseBody
-			json.Unmarshal(response.Body, &tamrBody)
+			json.Unmarshal(*response.Json, &tamrBody)
 			if tamrBody.License.Healthy &&
 				tamrBody.License.Message != "tamr license is not valid" &&
 				tamrBody.License.Timestamp.Before(time.Now().Add(LICENSE_GRACE_DAYS)) {

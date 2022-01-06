@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/aws/aws-sdk-go/service/cloudformation"
-	"github.com/blentz/cloud-haunter/utils"
 	"net/http"
 	"os"
 	"sort"
@@ -16,7 +14,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/cloudformation"
 	elb "github.com/aws/aws-sdk-go/service/elbv2"
-	"github.com/hortonworks/cloud-haunter/utils"
+	"github.com/blentz/cloud-haunter/utils"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"

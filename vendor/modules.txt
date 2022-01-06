@@ -140,10 +140,6 @@ github.com/google/uuid
 github.com/googleapis/gax-go/v2
 github.com/googleapis/gax-go/v2/apierror
 github.com/googleapis/gax-go/v2/apierror/internal/proto
-# github.com/hortonworks/cloud-haunter v0.5.45
-## explicit; go 1.17
-github.com/hortonworks/cloud-haunter/context
-github.com/hortonworks/cloud-haunter/types
 # github.com/jmespath/go-jmespath v0.4.0
 ## explicit; go 1.14
 github.com/jmespath/go-jmespath

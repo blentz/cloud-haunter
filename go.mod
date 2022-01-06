@@ -9,7 +9,6 @@ require (
 	github.com/Azure/go-autorest/autorest v0.11.23
 	github.com/Azure/go-autorest/autorest/azure/auth v0.5.10
 	github.com/aws/aws-sdk-go v1.42.29
-	github.com/hortonworks/cloud-haunter v0.5.45
 	github.com/sirupsen/logrus v1.8.1
 	github.com/stretchr/testify v1.7.0
 	github.com/tbruyelle/hipchat-go v0.0.0-20170717082847-35aebc99209a

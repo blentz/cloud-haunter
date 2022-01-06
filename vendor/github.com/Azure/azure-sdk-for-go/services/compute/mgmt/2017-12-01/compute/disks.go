@@ -78,7 +78,7 @@ func (client DisksClient) CreateOrUpdate(ctx context.Context, resourceGroupName 
 
 	result, err = client.CreateOrUpdateSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.DisksClient", "CreateOrUpdate", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.DisksClient", "CreateOrUpdate", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -162,7 +162,7 @@ func (client DisksClient) Delete(ctx context.Context, resourceGroupName string, 
 
 	result, err = client.DeleteSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.DisksClient", "Delete", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.DisksClient", "Delete", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -328,7 +328,7 @@ func (client DisksClient) GrantAccess(ctx context.Context, resourceGroupName str
 
 	result, err = client.GrantAccessSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.DisksClient", "GrantAccess", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.DisksClient", "GrantAccess", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -640,7 +640,7 @@ func (client DisksClient) RevokeAccess(ctx context.Context, resourceGroupName st
 
 	result, err = client.RevokeAccessSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.DisksClient", "RevokeAccess", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.DisksClient", "RevokeAccess", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -722,7 +722,7 @@ func (client DisksClient) Update(ctx context.Context, resourceGroupName string, 
 
 	result, err = client.UpdateSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.DisksClient", "Update", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.DisksClient", "Update", result.Response(), "Failure sending request")
 		return
 	}
 

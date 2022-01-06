@@ -252,8 +252,7 @@ func (c *WorkflowTemplateClient) InstantiateWorkflowTemplateOperation(name strin
 // InstantiateInlineWorkflowTemplate instantiates a template and begins execution.
 //
 // This method is equivalent to executing the sequence
-// CreateWorkflowTemplate,
-// InstantiateWorkflowTemplate,
+// CreateWorkflowTemplate, InstantiateWorkflowTemplate,
 // DeleteWorkflowTemplate.
 //
 // The returned Operation can be used to track execution of
@@ -513,11 +512,13 @@ func (c *workflowTemplateGRPCClient) ListWorkflowTemplates(ctx context.Context, 
 	it := &WorkflowTemplateIterator{}
 	req = proto.Clone(req).(*dataprocpb.ListWorkflowTemplatesRequest)
 	it.InternalFetch = func(pageSize int, pageToken string) ([]*dataprocpb.WorkflowTemplate, string, error) {
-		var resp *dataprocpb.ListWorkflowTemplatesResponse
-		req.PageToken = pageToken
+		resp := &dataprocpb.ListWorkflowTemplatesResponse{}
+		if pageToken != "" {
+			req.PageToken = pageToken
+		}
 		if pageSize > math.MaxInt32 {
 			req.PageSize = math.MaxInt32
-		} else {
+		} else if pageSize != 0 {
 			req.PageSize = int32(pageSize)
 		}
 		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -540,9 +541,11 @@ func (c *workflowTemplateGRPCClient) ListWorkflowTemplates(ctx context.Context, 
 		it.items = append(it.items, items...)
 		return nextPageToken, nil
 	}
+
 	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
 	it.pageInfo.MaxSize = int(req.GetPageSize())
 	it.pageInfo.Token = req.GetPageToken()
+
 	return it
 }
 

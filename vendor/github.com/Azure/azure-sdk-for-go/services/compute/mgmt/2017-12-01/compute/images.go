@@ -54,7 +54,7 @@ func (client ImagesClient) CreateOrUpdate(ctx context.Context, resourceGroupName
 
 	result, err = client.CreateOrUpdateSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.ImagesClient", "CreateOrUpdate", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.ImagesClient", "CreateOrUpdate", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -135,7 +135,7 @@ func (client ImagesClient) Delete(ctx context.Context, resourceGroupName string,
 
 	result, err = client.DeleteSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.ImagesClient", "Delete", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.ImagesClient", "Delete", result.Response(), "Failure sending request")
 		return
 	}
 
@@ -525,7 +525,7 @@ func (client ImagesClient) Update(ctx context.Context, resourceGroupName string,
 
 	result, err = client.UpdateSender(req)
 	if err != nil {
-		err = autorest.NewErrorWithError(err, "compute.ImagesClient", "Update", nil, "Failure sending request")
+		err = autorest.NewErrorWithError(err, "compute.ImagesClient", "Update", result.Response(), "Failure sending request")
 		return
 	}
 

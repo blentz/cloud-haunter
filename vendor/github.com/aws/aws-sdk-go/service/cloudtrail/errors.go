@@ -11,8 +11,8 @@ const (
 	// ErrCodeARNInvalidException for service response error code
 	// "CloudTrailARNInvalidException".
 	//
-	// This exception is thrown when an operation is called with an invalid trail
-	// ARN. The format of a trail ARN is:
+	// This exception is thrown when an operation is called with a trail ARN that
+	// is not valid. The following is the format of a trail ARN.
 	//
 	// arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail
 	ErrCodeARNInvalidException = "CloudTrailARNInvalidException"
@@ -21,8 +21,8 @@ const (
 	// "CloudTrailAccessNotEnabledException".
 	//
 	// This exception is thrown when trusted access has not been enabled between
-	// AWS CloudTrail and AWS Organizations. For more information, see Enabling
-	// Trusted Access with Other AWS Services (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html)
+	// CloudTrail and Organizations. For more information, see Enabling Trusted
+	// Access with Other Amazon Web Services Services (https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html)
 	// and Prepare For Creating a Trail For Your Organization (https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-an-organizational-trail-prepare.html).
 	ErrCodeAccessNotEnabledException = "CloudTrailAccessNotEnabledException"
 
@@ -31,7 +31,8 @@ const (
 	//
 	// This exception is thrown when a call results in the InvalidClientTokenId
 	// error code. This can occur when you are creating or updating a trail to send
-	// notifications to an Amazon SNS topic that is in a suspended AWS account.
+	// notifications to an Amazon SNS topic that is in a suspended Amazon Web Services
+	// account.
 	ErrCodeCloudTrailInvalidClientTokenIdException = "CloudTrailInvalidClientTokenIdException"
 
 	// ErrCodeCloudWatchLogsDeliveryUnavailableException for service response error code
@@ -48,6 +49,51 @@ const (
 	// CloudTrail has time to fully load the trail. If this exception occurs, wait
 	// a few minutes, and then try the operation again.
 	ErrCodeConflictException = "ConflictException"
+
+	// ErrCodeEventDataStoreARNInvalidException for service response error code
+	// "EventDataStoreARNInvalidException".
+	//
+	// The specified event data store ARN is not valid or does not map to an event
+	// data store in your account.
+	ErrCodeEventDataStoreARNInvalidException = "EventDataStoreARNInvalidException"
+
+	// ErrCodeEventDataStoreAlreadyExistsException for service response error code
+	// "EventDataStoreAlreadyExistsException".
+	//
+	// An event data store with that name already exists.
+	ErrCodeEventDataStoreAlreadyExistsException = "EventDataStoreAlreadyExistsException"
+
+	// ErrCodeEventDataStoreMaxLimitExceededException for service response error code
+	// "EventDataStoreMaxLimitExceededException".
+	//
+	// Your account has used the maximum number of event data stores.
+	ErrCodeEventDataStoreMaxLimitExceededException = "EventDataStoreMaxLimitExceededException"
+
+	// ErrCodeEventDataStoreNotFoundException for service response error code
+	// "EventDataStoreNotFoundException".
+	//
+	// The specified event data store was not found.
+	ErrCodeEventDataStoreNotFoundException = "EventDataStoreNotFoundException"
+
+	// ErrCodeEventDataStoreTerminationProtectedException for service response error code
+	// "EventDataStoreTerminationProtectedException".
+	//
+	// The event data store cannot be deleted because termination protection is
+	// enabled for it.
+	ErrCodeEventDataStoreTerminationProtectedException = "EventDataStoreTerminationProtectedException"
+
+	// ErrCodeInactiveEventDataStoreException for service response error code
+	// "InactiveEventDataStoreException".
+	//
+	// The event data store against which you ran your query is inactive.
+	ErrCodeInactiveEventDataStoreException = "InactiveEventDataStoreException"
+
+	// ErrCodeInactiveQueryException for service response error code
+	// "InactiveQueryException".
+	//
+	// The specified query cannot be canceled because it is in the FINISHED, FAILED,
+	// or CANCELLED state.
+	ErrCodeInactiveQueryException = "InactiveQueryException"
 
 	// ErrCodeInsightNotEnabledException for service response error code
 	// "InsightNotEnabledException".
@@ -81,13 +127,14 @@ const (
 	// ErrCodeInsufficientSnsTopicPolicyException for service response error code
 	// "InsufficientSnsTopicPolicyException".
 	//
-	// This exception is thrown when the policy on the SNS topic is not sufficient.
+	// This exception is thrown when the policy on the Amazon SNS topic is not sufficient.
 	ErrCodeInsufficientSnsTopicPolicyException = "InsufficientSnsTopicPolicyException"
 
 	// ErrCodeInvalidCloudWatchLogsLogGroupArnException for service response error code
 	// "InvalidCloudWatchLogsLogGroupArnException".
 	//
-	// This exception is thrown when the provided CloudWatch log group is not valid.
+	// This exception is thrown when the provided CloudWatch Logs log group is not
+	// valid.
 	ErrCodeInvalidCloudWatchLogsLogGroupArnException = "InvalidCloudWatchLogsLogGroupArnException"
 
 	// ErrCodeInvalidCloudWatchLogsRoleArnException for service response error code
@@ -96,12 +143,26 @@ const (
 	// This exception is thrown when the provided role is not valid.
 	ErrCodeInvalidCloudWatchLogsRoleArnException = "InvalidCloudWatchLogsRoleArnException"
 
+	// ErrCodeInvalidDateRangeException for service response error code
+	// "InvalidDateRangeException".
+	//
+	// A date range for the query was specified that is not valid. For more information
+	// about writing a query, see Create or edit a query (https://docs.aws.amazon.com/awscloudtrail/latest/userguide/query-create-edit-query.html)
+	// in the CloudTrail User Guide.
+	ErrCodeInvalidDateRangeException = "InvalidDateRangeException"
+
 	// ErrCodeInvalidEventCategoryException for service response error code
 	// "InvalidEventCategoryException".
 	//
 	// Occurs if an event category that is not valid is specified as a value of
 	// EventCategory.
 	ErrCodeInvalidEventCategoryException = "InvalidEventCategoryException"
+
+	// ErrCodeInvalidEventDataStoreStatusException for service response error code
+	// "InvalidEventDataStoreStatusException".
+	//
+	// The event data store is not in a status that supports the operation.
+	ErrCodeInvalidEventDataStoreStatusException = "InvalidEventDataStoreStatusException"
 
 	// ErrCodeInvalidEventSelectorsException for service response error code
 	// "InvalidEventSelectorsException".
@@ -129,7 +190,7 @@ const (
 	//    for a trail.
 	//
 	//    * Specify a valid value for a parameter. For example, specifying the ReadWriteType
-	//    parameter with a value of read-only is invalid.
+	//    parameter with a value of read-only is not valid.
 	ErrCodeInvalidEventSelectorsException = "InvalidEventSelectorsException"
 
 	// ErrCodeInvalidHomeRegionException for service response error code
@@ -150,26 +211,26 @@ const (
 	// ErrCodeInvalidKmsKeyIdException for service response error code
 	// "InvalidKmsKeyIdException".
 	//
-	// This exception is thrown when the KMS key ARN is invalid.
+	// This exception is thrown when the KMS key ARN is not valid.
 	ErrCodeInvalidKmsKeyIdException = "InvalidKmsKeyIdException"
 
 	// ErrCodeInvalidLookupAttributesException for service response error code
 	// "InvalidLookupAttributesException".
 	//
-	// Occurs when an invalid lookup attribute is specified.
+	// Occurs when a lookup attribute is specified that is not valid.
 	ErrCodeInvalidLookupAttributesException = "InvalidLookupAttributesException"
 
 	// ErrCodeInvalidMaxResultsException for service response error code
 	// "InvalidMaxResultsException".
 	//
-	// This exception is thrown if the limit specified is invalid.
+	// This exception is thrown if the limit specified is not valid.
 	ErrCodeInvalidMaxResultsException = "InvalidMaxResultsException"
 
 	// ErrCodeInvalidNextTokenException for service response error code
 	// "InvalidNextTokenException".
 	//
-	// Invalid token or token that was previously used in a request with different
-	// parameters. This exception is thrown if the token is invalid.
+	// A token that is not valid, or a token that was previously used in a request
+	// with different parameters. This exception is thrown if the token is not valid.
 	ErrCodeInvalidNextTokenException = "InvalidNextTokenException"
 
 	// ErrCodeInvalidParameterCombinationException for service response error code
@@ -178,6 +239,27 @@ const (
 	// This exception is thrown when the combination of parameters provided is not
 	// valid.
 	ErrCodeInvalidParameterCombinationException = "InvalidParameterCombinationException"
+
+	// ErrCodeInvalidParameterException for service response error code
+	// "InvalidParameterException".
+	//
+	// The request includes a parameter that is not valid.
+	ErrCodeInvalidParameterException = "InvalidParameterException"
+
+	// ErrCodeInvalidQueryStatementException for service response error code
+	// "InvalidQueryStatementException".
+	//
+	// The query that was submitted has validation errors, or uses incorrect syntax
+	// or unsupported keywords. For more information about writing a query, see
+	// Create or edit a query (https://docs.aws.amazon.com/awscloudtrail/latest/userguide/query-create-edit-query.html)
+	// in the CloudTrail User Guide.
+	ErrCodeInvalidQueryStatementException = "InvalidQueryStatementException"
+
+	// ErrCodeInvalidQueryStatusException for service response error code
+	// "InvalidQueryStatusException".
+	//
+	// The query status is not valid for the operation.
+	ErrCodeInvalidQueryStatusException = "InvalidQueryStatusException"
 
 	// ErrCodeInvalidS3BucketNameException for service response error code
 	// "InvalidS3BucketNameException".
@@ -207,8 +289,8 @@ const (
 	// ErrCodeInvalidTimeRangeException for service response error code
 	// "InvalidTimeRangeException".
 	//
-	// Occurs if the timestamp values are invalid. Either the start time occurs
-	// after the end time or the time range is outside the range of possible values.
+	// Occurs if the timestamp values are not valid. Either the start time occurs
+	// after the end time, or the time range is outside the range of possible values.
 	ErrCodeInvalidTimeRangeException = "InvalidTimeRangeException"
 
 	// ErrCodeInvalidTokenException for service response error code
@@ -231,7 +313,7 @@ const (
 	//    * Be between 3 and 128 characters
 	//
 	//    * Have no adjacent periods, underscores or dashes. Names like my-_namespace
-	//    and my--namespace are invalid.
+	//    and my--namespace are not valid.
 	//
 	//    * Not be in IP address format (for example, 192.168.5.4)
 	ErrCodeInvalidTrailNameException = "InvalidTrailNameException"
@@ -252,11 +334,17 @@ const (
 	// ErrCodeKmsKeyNotFoundException for service response error code
 	// "KmsKeyNotFoundException".
 	//
-	// This exception is thrown when the AWS KMS key does not exist, when the S3
-	// bucket and the AWS KMS key are not in the same region, or when the AWS KMS
-	// key associated with the SNS topic either does not exist or is not in the
-	// same region.
+	// This exception is thrown when the KMS key does not exist, when the S3 bucket
+	// and the KMS key are not in the same region, or when the KMS key associated
+	// with the Amazon SNS topic either does not exist or is not in the same region.
 	ErrCodeKmsKeyNotFoundException = "KmsKeyNotFoundException"
+
+	// ErrCodeMaxConcurrentQueriesException for service response error code
+	// "MaxConcurrentQueriesException".
+	//
+	// You are already running the maximum number of concurrent queries. Wait a
+	// minute for some queries to finish, and then run the query again.
+	ErrCodeMaxConcurrentQueriesException = "MaxConcurrentQueriesException"
 
 	// ErrCodeMaximumNumberOfTrailsExceededException for service response error code
 	// "MaximumNumberOfTrailsExceededException".
@@ -267,10 +355,10 @@ const (
 	// ErrCodeNotOrganizationMasterAccountException for service response error code
 	// "NotOrganizationMasterAccountException".
 	//
-	// This exception is thrown when the AWS account making the request to create
-	// or update an organization trail is not the master account for an organization
-	// in AWS Organizations. For more information, see Prepare For Creating a Trail
-	// For Your Organization (https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-an-organizational-trail-prepare.html).
+	// This exception is thrown when the Amazon Web Services account making the
+	// request to create or update an organization trail is not the management account
+	// for an organization in Organizations. For more information, see Prepare For
+	// Creating a Trail For Your Organization (https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-an-organizational-trail-prepare.html).
 	ErrCodeNotOrganizationMasterAccountException = "NotOrganizationMasterAccountException"
 
 	// ErrCodeOperationNotPermittedException for service response error code
@@ -282,19 +370,25 @@ const (
 	// ErrCodeOrganizationNotInAllFeaturesModeException for service response error code
 	// "OrganizationNotInAllFeaturesModeException".
 	//
-	// This exception is thrown when AWS Organizations is not configured to support
-	// all features. All features must be enabled in AWS Organization to support
-	// creating an organization trail. For more information, see Prepare For Creating
-	// a Trail For Your Organization (https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-an-organizational-trail-prepare.html).
+	// This exception is thrown when Organizations is not configured to support
+	// all features. All features must be enabled in Organizations to support creating
+	// an organization trail. For more information, see Prepare For Creating a Trail
+	// For Your Organization (https://docs.aws.amazon.com/awscloudtrail/latest/userguide/creating-an-organizational-trail-prepare.html).
 	ErrCodeOrganizationNotInAllFeaturesModeException = "OrganizationNotInAllFeaturesModeException"
 
 	// ErrCodeOrganizationsNotInUseException for service response error code
 	// "OrganizationsNotInUseException".
 	//
-	// This exception is thrown when the request is made from an AWS account that
-	// is not a member of an organization. To make this request, sign in using the
-	// credentials of an account that belongs to an organization.
+	// This exception is thrown when the request is made from an Amazon Web Services
+	// account that is not a member of an organization. To make this request, sign
+	// in using the credentials of an account that belongs to an organization.
 	ErrCodeOrganizationsNotInUseException = "OrganizationsNotInUseException"
+
+	// ErrCodeQueryIdNotFoundException for service response error code
+	// "QueryIdNotFoundException".
+	//
+	// The query ID does not exist or does not map to a query.
+	ErrCodeQueryIdNotFoundException = "QueryIdNotFoundException"
 
 	// ErrCodeResourceNotFoundException for service response error code
 	// "ResourceNotFoundException".
@@ -353,6 +447,13 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"CloudTrailInvalidClientTokenIdException":                newErrorCloudTrailInvalidClientTokenIdException,
 	"CloudWatchLogsDeliveryUnavailableException":             newErrorCloudWatchLogsDeliveryUnavailableException,
 	"ConflictException":                                      newErrorConflictException,
+	"EventDataStoreARNInvalidException":                      newErrorEventDataStoreARNInvalidException,
+	"EventDataStoreAlreadyExistsException":                   newErrorEventDataStoreAlreadyExistsException,
+	"EventDataStoreMaxLimitExceededException":                newErrorEventDataStoreMaxLimitExceededException,
+	"EventDataStoreNotFoundException":                        newErrorEventDataStoreNotFoundException,
+	"EventDataStoreTerminationProtectedException":            newErrorEventDataStoreTerminationProtectedException,
+	"InactiveEventDataStoreException":                        newErrorInactiveEventDataStoreException,
+	"InactiveQueryException":                                 newErrorInactiveQueryException,
 	"InsightNotEnabledException":                             newErrorInsightNotEnabledException,
 	"InsufficientDependencyServiceAccessPermissionException": newErrorInsufficientDependencyServiceAccessPermissionException,
 	"InsufficientEncryptionPolicyException":                  newErrorInsufficientEncryptionPolicyException,
@@ -360,7 +461,9 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"InsufficientSnsTopicPolicyException":                    newErrorInsufficientSnsTopicPolicyException,
 	"InvalidCloudWatchLogsLogGroupArnException":              newErrorInvalidCloudWatchLogsLogGroupArnException,
 	"InvalidCloudWatchLogsRoleArnException":                  newErrorInvalidCloudWatchLogsRoleArnException,
+	"InvalidDateRangeException":                              newErrorInvalidDateRangeException,
 	"InvalidEventCategoryException":                          newErrorInvalidEventCategoryException,
+	"InvalidEventDataStoreStatusException":                   newErrorInvalidEventDataStoreStatusException,
 	"InvalidEventSelectorsException":                         newErrorInvalidEventSelectorsException,
 	"InvalidHomeRegionException":                             newErrorInvalidHomeRegionException,
 	"InvalidInsightSelectorsException":                       newErrorInvalidInsightSelectorsException,
@@ -369,6 +472,9 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"InvalidMaxResultsException":                             newErrorInvalidMaxResultsException,
 	"InvalidNextTokenException":                              newErrorInvalidNextTokenException,
 	"InvalidParameterCombinationException":                   newErrorInvalidParameterCombinationException,
+	"InvalidParameterException":                              newErrorInvalidParameterException,
+	"InvalidQueryStatementException":                         newErrorInvalidQueryStatementException,
+	"InvalidQueryStatusException":                            newErrorInvalidQueryStatusException,
 	"InvalidS3BucketNameException":                           newErrorInvalidS3BucketNameException,
 	"InvalidS3PrefixException":                               newErrorInvalidS3PrefixException,
 	"InvalidSnsTopicNameException":                           newErrorInvalidSnsTopicNameException,
@@ -379,11 +485,13 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"KmsException":                                           newErrorKmsException,
 	"KmsKeyDisabledException":                                newErrorKmsKeyDisabledException,
 	"KmsKeyNotFoundException":                                newErrorKmsKeyNotFoundException,
+	"MaxConcurrentQueriesException":                          newErrorMaxConcurrentQueriesException,
 	"MaximumNumberOfTrailsExceededException":                 newErrorMaximumNumberOfTrailsExceededException,
 	"NotOrganizationMasterAccountException":                  newErrorNotOrganizationMasterAccountException,
 	"OperationNotPermittedException":                         newErrorOperationNotPermittedException,
 	"OrganizationNotInAllFeaturesModeException":              newErrorOrganizationNotInAllFeaturesModeException,
 	"OrganizationsNotInUseException":                         newErrorOrganizationsNotInUseException,
+	"QueryIdNotFoundException":                               newErrorQueryIdNotFoundException,
 	"ResourceNotFoundException":                              newErrorResourceNotFoundException,
 	"ResourceTypeNotSupportedException":                      newErrorResourceTypeNotSupportedException,
 	"S3BucketDoesNotExistException":                          newErrorS3BucketDoesNotExistException,

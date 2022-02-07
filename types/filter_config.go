@@ -17,6 +17,8 @@ const (
 	IncludeAccess   = FilterEntityType("includeAccess")
 	ExcludeInstance = FilterEntityType("excludeInstance")
 	IncludeInstance = FilterEntityType("includeInstance")
+	ExcludeCluster  = FilterEntityType("excludeCluster")
+	IncludeCluster  = FilterEntityType("includeCluster")
 )
 
 type FilterConfigProperty string
@@ -31,6 +33,8 @@ const (
 type FilterConfig struct {
 	ExcludeAccess   *FilterAccessConfig   `yaml:"excludeAccess"`
 	IncludeAccess   *FilterAccessConfig   `yaml:"includeAccess"`
+	ExcludeCluster  *FilterClusterConfig  `yaml:"excludeCluster"`
+	IncludeCluster  *FilterClusterConfig  `yaml:"includeCluster"`
 	ExcludeInstance *FilterInstanceConfig `yaml:"excludeInstance"`
 	IncludeInstance *FilterInstanceConfig `yaml:"includeInstance"`
 	ExcludeImage    *FilterImageConfig    `yaml:"excludeImage"`
@@ -171,7 +175,7 @@ type FilterStackConfig struct {
 	} `yaml:"gcp"`
 }
 
-// FilterClusterConfig filter properties for instances
+// FilterClusterConfig filter properties for clusters
 type FilterClusterConfig struct {
 	Aws struct {
 		Labels []string `yaml:"labels"`

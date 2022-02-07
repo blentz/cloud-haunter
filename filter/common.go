@@ -60,7 +60,13 @@ func isFilterMatch(filterName string, item types.CloudItem, filterType types.Fil
 		} else {
 			filterEntityType = types.ExcludeAccess
 		}
-	case types.Instance, types.Stack, types.Database, types.Disk, types.Alert, types.Storage, types.Cluster:
+	case types.Cluster:
+		if filterType.IsInclusive() {
+			filterEntityType = types.IncludeCluster
+		} else {
+			filterEntityType = types.ExcludeCluster
+		}
+	case types.Instance, types.Stack, types.Database, types.Disk, types.Alert, types.Storage:
 		if filterType.IsInclusive() {
 			filterEntityType = types.IncludeInstance
 		} else {
@@ -88,6 +94,7 @@ func isFilterMatch(filterName string, item types.CloudItem, filterType types.Fil
 		}
 		filtered, applied = filtered || ownerMatch, true
 	}
+
 	if labels := filterConfig.GetFilterValues(filterEntityType, item.GetCloudType(), types.Label); labels != nil {
 		log.Debugf("[%s] filtering item %s to labels [%s]", filterName, item.GetName(), labels)
 		filtered, applied = filtered || utils.IsAnyStartsWith(item.GetTags(), labels...), true

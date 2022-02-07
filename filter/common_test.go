@@ -6,6 +6,7 @@ import (
 	ctx "github.com/blentz/cloud-haunter/context"
 	"github.com/blentz/cloud-haunter/types"
 	"github.com/blentz/cloud-haunter/utils"
+	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -39,10 +40,20 @@ func TestIsIgnored(t *testing.T) {
 			Name:      "ignored-by-owner",
 			Owner:     "skipThisOwner-0",
 		},
+		&types.Cluster{
+			CloudType: types.GCP,
+			Name:      "skipThisName-0",
+		},
+		&types.Cluster{
+			CloudType: types.GCP,
+			Name:      "ignored-by-owner",
+			Owner:     "skipThisOwner-0",
+		},
 	}
 	filterConfig, _ := utils.LoadFilterConfig("testdata/sample-ignore.yml")
 
 	for _, item := range items {
+		log.Warnf("XXX: %+v", item)
 		isFiltered := isFilterMatch("TEST", item, types.ExclusiveFilter, filterConfig)
 		assert.True(t, isFiltered, "Item found: "+item.GetName())
 	}

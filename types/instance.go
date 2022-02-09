@@ -2,7 +2,6 @@ package types
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	log "github.com/sirupsen/logrus"
 	"io"
@@ -92,7 +91,7 @@ type JsonResponseBody struct {
 type RemoteResponse struct {
 	Code int
 	Body string
-	Json *[]byte
+	Json []byte
 }
 
 // GetUrl returns the result of an HTTP request to the instance
@@ -120,12 +119,7 @@ func (i Instance) GetUrl(path string, port string) RemoteResponse {
 		log.Errorf("[GET_URL] Error fetching %s - %s", uri, err)
 		return RemoteResponse{0, "", nil}
 	}
-	log.Debug("[GET_URL] HTTP response: ", resp.Status)
-
-	if resp.ContentLength < 1 {
-		log.Debug("[GET_URL] HTTP request returned empty response.")
-		return RemoteResponse{0, "", nil}
-	}
+	log.Debugf("[GET_URL] HTTP response: %s", resp.Status)
 
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
@@ -134,10 +128,11 @@ func (i Instance) GetUrl(path string, port string) RemoteResponse {
 	}
 
 	if resp.Header.Get("Content-Type") == "application/json" {
-		jsonbody := new([]byte)
-		json.Unmarshal(body, jsonbody)
-		log.Debug("[GET_URL] JSON Body: ", string(*jsonbody))
-		return RemoteResponse{resp.StatusCode, "", jsonbody}
+		log.Debugf("[GET_URL] JSON Body: %+v", string(body))
+		return RemoteResponse{resp.StatusCode, "", body}
+	} else if resp.ContentLength < 1 {
+		log.Debug("[GET_URL] HTTP request returned empty response.")
+		return RemoteResponse{0, "", nil}
 	}
 
 	buf := new(bytes.Buffer)

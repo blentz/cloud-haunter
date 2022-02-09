@@ -6,7 +6,6 @@ import (
 	ctx "github.com/blentz/cloud-haunter/context"
 	"github.com/blentz/cloud-haunter/types"
 	"github.com/blentz/cloud-haunter/utils"
-	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -24,7 +24,6 @@ type TamrResponseBody struct {
 
 func ParseTamrLicenseSchema(filterName string, jsonBody []byte) TamrResponseBody {
 	// function to validate the JSON schema, not the values.
-
 	log.Debugf("[%s] JSON Body: %+v", filterName, jsonBody)
 	var i TamrResponseBody
 	json.Unmarshal(jsonBody, &i)

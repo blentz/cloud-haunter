@@ -39,6 +39,9 @@ const (
 
 	// TamrLicenseFilter filters the items based on the presence of a Tamr license.
 	TamrLicenseFilter = FilterType("tamr-unlicensed")
+
+	// TamrVersionFilter filters the items based on the version of Tamr software installed on an instance.
+	TamrVersionFilter = FilterType("tamr-version")
 )
 
 // FilterConfigType inclusive or exclusive filter type

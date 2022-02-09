@@ -6,14 +6,16 @@ require (
 	github.com/Azure/azure-sdk-for-go v60.1.0+incompatible
 	github.com/Azure/azure-storage-blob-go v0.14.0
 	github.com/Azure/go-autorest/autorest v0.11.23
-	github.com/Azure/go-autorest/autorest/azure/auth v0.5.9
-	github.com/aws/aws-sdk-go v1.29.34
-	github.com/sirupsen/logrus v1.0.5
-	github.com/stretchr/testify v1.4.0
-	github.com/tbruyelle/hipchat-go v0.0.0-20160921153256-749fb9e14beb
-	golang.org/x/oauth2 v0.0.0-20180620175406-ef147856a6dd
-	google.golang.org/api v0.0.0-20180717000714-0025a57598c0
-	gopkg.in/yaml.v2 v2.2.2
+	github.com/Azure/go-autorest/autorest/azure/auth v0.5.10
+	github.com/aws/aws-sdk-go v1.42.29
+	github.com/sirupsen/logrus v1.8.1
+	github.com/stretchr/testify v1.7.0
+	github.com/tbruyelle/hipchat-go v0.0.0-20170717082847-35aebc99209a
+	golang.org/x/mod v0.5.1
+	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
+	google.golang.org/api v0.64.0
+	google.golang.org/genproto v0.0.0-20220106181925-4b6d468c965f
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (

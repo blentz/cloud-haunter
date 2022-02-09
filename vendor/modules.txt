@@ -137,9 +137,11 @@ github.com/tbruyelle/hipchat-go/hipchat
 ## explicit; go 1.17
 golang.org/x/crypto/pkcs12
 golang.org/x/crypto/pkcs12/internal/rc2
-golang.org/x/crypto/ssh/terminal
-# golang.org/x/net v0.0.0-20210226172049-e18ecbb05110
-## explicit; go 1.11
+# golang.org/x/mod v0.5.1
+## explicit; go 1.17
+golang.org/x/mod/semver
+# golang.org/x/net v0.0.0-20220105145211-5b0dc2dfae98
+## explicit; go 1.17
 golang.org/x/net/context
 golang.org/x/net/context/ctxhttp
 golang.org/x/net/http/httpproxy

@@ -1403,8 +1403,13 @@ func (c *RDS) CreateCustomDBEngineVersionRequest(input *CreateCustomDBEngineVers
 // CreateCustomDBEngineVersion API operation for Amazon Relational Database Service.
 //
 // Creates a custom DB engine version (CEV). A CEV is a binary volume snapshot
-// of a database engine and specific AMI. The only supported engine is Oracle
-// Database 19c Enterprise Edition with the January 2021 or later RU/RUR.
+// of a database engine and specific AMI. The supported engines are the following:
+//
+//    * Oracle Database 12.1 Enterprise Edition with the January 2021 or later
+//    RU/RUR
+//
+//    * Oracle Database 19c Enterprise Edition with the January 2021 or later
+//    RU/RUR
 //
 // Amazon RDS, which is a fully managed service, supplies the Amazon Machine
 // Image (AMI) and database software. The Amazon RDS database software is preinstalled,
@@ -2867,12 +2872,12 @@ func (c *RDS) CreateEventSubscriptionRequest(input *CreateEventSubscriptionInput
 // = Availability, Backup.
 //
 // If you specify both the SourceType and SourceIds, such as SourceType = db-instance
-// and SourceIdentifier = myDBInstance1, you are notified of all the db-instance
-// events for the specified source. If you specify a SourceType but do not specify
-// a SourceIdentifier, you receive notice of the events for that source type
-// for all your RDS sources. If you don't specify either the SourceType or the
-// SourceIdentifier, you are notified of events generated from all RDS sources
-// belonging to your customer account.
+// and SourceIds = myDBInstance1, you are notified of all the db-instance events
+// for the specified source. If you specify a SourceType but do not specify
+// SourceIds, you receive notice of the events for that source type for all
+// your RDS sources. If you don't specify either the SourceType or the SourceIds,
+// you are notified of events generated from all RDS sources belonging to your
+// customer account.
 //
 // RDS event notification is only available for unencrypted SNS topics. If you
 // specify an encrypted SNS topic, event notifications aren't sent for the topic.
@@ -2892,7 +2897,7 @@ func (c *RDS) CreateEventSubscriptionRequest(input *CreateEventSubscriptionInput
 //   The supplied subscription name already exists.
 //
 //   * ErrCodeSNSInvalidTopicFault "SNSInvalidTopic"
-//   SNS has responded that there is a problem with the SND topic specified.
+//   SNS has responded that there is a problem with the SNS topic specified.
 //
 //   * ErrCodeSNSNoAuthorizationFault "SNSNoAuthorization"
 //   You do not have permission to publish to the SNS topic ARN.
@@ -8325,9 +8330,10 @@ func (c *RDS) DescribeEventCategoriesRequest(input *DescribeEventCategoriesInput
 // DescribeEventCategories API operation for Amazon Relational Database Service.
 //
 // Displays a list of categories for all event source types, or, if specified,
-// for a specified source type. You can see a list of the event categories and
-// source types in Events (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html)
-// in the Amazon RDS User Guide.
+// for a specified source type. You can also see this list in the "Amazon RDS
+// event categories and event messages" section of the Amazon RDS User Guide
+// (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.Messages.html)
+// or the Amazon Aurora User Guide (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Events.Messages.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -8549,12 +8555,12 @@ func (c *RDS) DescribeEventsRequest(input *DescribeEventsInput) (req *request.Re
 // DescribeEvents API operation for Amazon Relational Database Service.
 //
 // Returns events related to DB instances, DB clusters, DB parameter groups,
-// DB security groups, DB snapshots, and DB cluster snapshots for the past 14
-// days. Events specific to a particular DB instances, DB clusters, DB parameter
-// groups, DB security groups, DB snapshots, and DB cluster snapshots group
-// can be obtained by providing the name as a parameter.
+// DB security groups, DB snapshots, DB cluster snapshots, and RDS Proxies for
+// the past 14 days. Events specific to a particular DB instance, DB cluster,
+// DB parameter group, DB security group, DB snapshot, DB cluster snapshot group,
+// or RDS Proxy can be obtained by providing the name as a parameter.
 //
-// By default, the past hour of events are returned.
+// By default, RDS returns events that were generated in the past hour.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -12237,7 +12243,7 @@ func (c *RDS) ModifyEventSubscriptionRequest(input *ModifyEventSubscriptionInput
 //   The subscription name does not exist.
 //
 //   * ErrCodeSNSInvalidTopicFault "SNSInvalidTopic"
-//   SNS has responded that there is a problem with the SND topic specified.
+//   SNS has responded that there is a problem with the SNS topic specified.
 //
 //   * ErrCodeSNSNoAuthorizationFault "SNSNoAuthorization"
 //   You do not have permission to publish to the SNS topic ARN.
@@ -15937,6 +15943,8 @@ type AddSourceIdentifierToSubscriptionInput struct {
 	//    * If the source type is a DB cluster snapshot, a DBClusterSnapshotIdentifier
 	//    value must be supplied.
 	//
+	//    * If the source type is an RDS Proxy, a DBProxyName value must be supplied.
+	//
 	// SourceIdentifier is a required field
 	SourceIdentifier *string `type:"string" required:"true"`
 
@@ -17150,8 +17158,8 @@ type ConnectionPoolConfiguration struct {
 	InitQuery *string `type:"string"`
 
 	// The maximum size of the connection pool for each target in a target group.
-	// For Aurora MySQL, it is expressed as a percentage of the max_connections
-	// setting for the RDS DB instance or Aurora DB cluster used by the target group.
+	// The value is expressed as a percentage of the max_connections setting for
+	// the RDS DB instance or Aurora DB cluster used by the target group.
 	//
 	// Default: 100
 	//
@@ -17159,11 +17167,11 @@ type ConnectionPoolConfiguration struct {
 	MaxConnectionsPercent *int64 `type:"integer"`
 
 	// Controls how actively the proxy closes idle database connections in the connection
-	// pool. A high value enables the proxy to leave a high percentage of idle connections
-	// open. A low value causes the proxy to close idle client connections and return
-	// the underlying database connections to the connection pool. For Aurora MySQL,
-	// it is expressed as a percentage of the max_connections setting for the RDS
-	// DB instance or Aurora DB cluster used by the target group.
+	// pool. The value is expressed as a percentage of the max_connections setting
+	// for the RDS DB instance or Aurora DB cluster used by the target group. With
+	// a high value, the proxy leaves a high percentage of idle database connections
+	// open. A low value causes the proxy to close more idle connections and return
+	// them to the database.
 	//
 	// Default: 50
 	//
@@ -17246,16 +17254,16 @@ type ConnectionPoolConfigurationInfo struct {
 	InitQuery *string `type:"string"`
 
 	// The maximum size of the connection pool for each target in a target group.
-	// For Aurora MySQL, it is expressed as a percentage of the max_connections
-	// setting for the RDS DB instance or Aurora DB cluster used by the target group.
+	// The value is expressed as a percentage of the max_connections setting for
+	// the RDS DB instance or Aurora DB cluster used by the target group.
 	MaxConnectionsPercent *int64 `type:"integer"`
 
 	// Controls how actively the proxy closes idle database connections in the connection
-	// pool. A high value enables the proxy to leave a high percentage of idle connections
-	// open. A low value causes the proxy to close idle client connections and return
-	// the underlying database connections to the connection pool. For Aurora MySQL,
-	// it is expressed as a percentage of the max_connections setting for the RDS
-	// DB instance or Aurora DB cluster used by the target group.
+	// pool. The value is expressed as a percentage of the max_connections setting
+	// for the RDS DB instance or Aurora DB cluster used by the target group. With
+	// a high value, the proxy leaves a high percentage of idle database connections
+	// open. A low value causes the proxy to close more idle connections and return
+	// them to the database.
 	MaxIdleConnectionsPercent *int64 `type:"integer"`
 
 	// Each item in the list represents a class of SQL operations that normally
@@ -19174,7 +19182,7 @@ type CreateDBClusterInput struct {
 	// Constraints: Must match the name of an existing DBSubnetGroup. Must not be
 	// default.
 	//
-	// Example: mySubnetgroup
+	// Example: mydbsubnetgroup
 	//
 	// Valid for: Aurora DB clusters and Multi-AZ DB clusters
 	DBSubnetGroupName *string `type:"string"`
@@ -20665,7 +20673,10 @@ type CreateDBInstanceInput struct {
 
 	// A DB subnet group to associate with this DB instance.
 	//
-	// If there is no DB subnet group, then it is a non-VPC DB instance.
+	// Constraints: Must match the name of an existing DBSubnetGroup. Must not be
+	// default.
+	//
+	// Example: mydbsubnetgroup
 	DBSubnetGroupName *string `type:"string"`
 
 	// A value that indicates whether the DB instance has deletion protection enabled.
@@ -21686,7 +21697,7 @@ type CreateDBInstanceReadReplicaInput struct {
 	//    Not specify a DB subnet group. All these read replicas are created outside
 	//    of any VPC.
 	//
-	// Example: mySubnetgroup
+	// Example: mydbsubnetgroup
 	DBSubnetGroupName *string `type:"string"`
 
 	// A value that indicates whether the DB instance has deletion protection enabled.
@@ -23053,10 +23064,16 @@ type CreateDBSubnetGroupInput struct {
 
 	// The name for the DB subnet group. This value is stored as a lowercase string.
 	//
-	// Constraints: Must contain no more than 255 letters, numbers, periods, underscores,
-	// spaces, or hyphens. Must not be default.
+	// Constraints:
 	//
-	// Example: mySubnetgroup
+	//    * Must contain no more than 255 letters, numbers, periods, underscores,
+	//    spaces, or hyphens.
+	//
+	//    * Must not be default.
+	//
+	//    * First character must be a letter.
+	//
+	// Example: mydbsubnetgroup
 	//
 	// DBSubnetGroupName is a required field
 	DBSubnetGroupName *string `type:"string" required:"true"`
@@ -23175,8 +23192,10 @@ type CreateEventSubscriptionInput struct {
 
 	// A list of event categories for a particular source type (SourceType) that
 	// you want to subscribe to. You can see a list of the categories for a given
-	// source type in Events (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html)
-	// in the Amazon RDS User Guide or by using the DescribeEventCategories operation.
+	// source type in the "Amazon RDS event categories and event messages" section
+	// of the Amazon RDS User Guide (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.Messages.html)
+	// or the Amazon Aurora User Guide (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_Events.Messages.html).
+	// You can also see this list by using the DescribeEventCategories operation.
 	EventCategories []*string `locationNameList:"EventCategory" type:"list"`
 
 	// The Amazon Resource Name (ARN) of the SNS topic created for event notification.
@@ -23212,14 +23231,17 @@ type CreateEventSubscriptionInput struct {
 	//
 	//    * If the source type is a DB cluster snapshot, a DBClusterSnapshotIdentifier
 	//    value must be supplied.
+	//
+	//    * If the source type is an RDS Proxy, a DBProxyName value must be supplied.
 	SourceIds []*string `locationNameList:"SourceId" type:"list"`
 
 	// The type of source that is generating the events. For example, if you want
 	// to be notified of events generated by a DB instance, you set this parameter
-	// to db-instance. If this value isn't specified, all events are returned.
+	// to db-instance. For RDS Proxy events, specify db-proxy. If this value isn't
+	// specified, all events are returned.
 	//
 	// Valid values: db-instance | db-cluster | db-parameter-group | db-security-group
-	// | db-snapshot | db-cluster-snapshot
+	// | db-snapshot | db-cluster-snapshot | db-proxy
 	SourceType *string `type:"string"`
 
 	// The name of the subscription.
@@ -29645,12 +29667,10 @@ type DeleteDBSubnetGroupInput struct {
 	//
 	// You can't delete the default subnet group.
 	//
-	// Constraints:
-	//
 	// Constraints: Must match the name of an existing DBSubnetGroup. Must not be
 	// default.
 	//
-	// Example: mySubnetgroup
+	// Example: mydbsubnetgroup
 	//
 	// DBSubnetGroupName is a required field
 	DBSubnetGroupName *string `type:"string" required:"true"`
@@ -34045,10 +34065,11 @@ type DescribeEventCategoriesInput struct {
 	// This parameter isn't currently supported.
 	Filters []*Filter `locationNameList:"Filter" type:"list"`
 
-	// The type of source that is generating the events.
+	// The type of source that is generating the events. For RDS Proxy events, specify
+	// db-proxy.
 	//
 	// Valid values: db-instance | db-cluster | db-parameter-group | db-security-group
-	// | db-snapshot | db-cluster-snapshot
+	// | db-snapshot | db-cluster-snapshot | db-proxy
 	SourceType *string `type:"string"`
 }
 
@@ -34323,6 +34344,8 @@ type DescribeEventsInput struct {
 	//
 	//    * If the source type is a DB cluster snapshot, a DBClusterSnapshotIdentifier
 	//    value must be supplied.
+	//
+	//    * If the source type is an RDS Proxy, a DBProxyName value must be supplied.
 	//
 	//    * Can't end with a hyphen or contain two consecutive hyphens.
 	SourceIdentifier *string `type:"string"`
@@ -40163,7 +40186,7 @@ type ModifyDBInstanceInput struct {
 	//
 	// Constraints: If supplied, must match the name of an existing DBSubnetGroup.
 	//
-	// Example: mySubnetGroup
+	// Example: mydbsubnetgroup
 	DBSubnetGroupName *string `type:"string"`
 
 	// A value that indicates whether the DB instance has deletion protection enabled.
@@ -41662,7 +41685,7 @@ type ModifyDBSubnetGroupInput struct {
 	// Constraints: Must match the name of an existing DBSubnetGroup. Must not be
 	// default.
 	//
-	// Example: mySubnetgroup
+	// Example: mydbsubnetgroup
 	//
 	// DBSubnetGroupName is a required field
 	DBSubnetGroupName *string `type:"string" required:"true"`
@@ -41778,10 +41801,11 @@ type ModifyEventSubscriptionInput struct {
 
 	// The type of source that is generating the events. For example, if you want
 	// to be notified of events generated by a DB instance, you would set this parameter
-	// to db-instance. If this value isn't specified, all events are returned.
+	// to db-instance. For RDS Proxy events, specify db-proxy. If this value isn't
+	// specified, all events are returned.
 	//
 	// Valid values: db-instance | db-cluster | db-parameter-group | db-security-group
-	// | db-snapshot | db-cluster-snapshot
+	// | db-snapshot | db-cluster-snapshot | db-proxy
 	SourceType *string `type:"string"`
 
 	// The name of the RDS event notification subscription.
@@ -45538,7 +45562,7 @@ type RestoreDBClusterFromS3Input struct {
 	//
 	// Constraints: If supplied, must match the name of an existing DBSubnetGroup.
 	//
-	// Example: mySubnetgroup
+	// Example: mydbsubnetgroup
 	DBSubnetGroupName *string `type:"string"`
 
 	// The database name for the restored DB cluster.
@@ -46109,7 +46133,7 @@ type RestoreDBClusterFromSnapshotInput struct {
 	//
 	// Constraints: If supplied, must match the name of an existing DB subnet group.
 	//
-	// Example: mySubnetgroup
+	// Example: mydbsubnetgroup
 	//
 	// Valid for: Aurora DB clusters and Multi-AZ DB clusters
 	DBSubnetGroupName *string `type:"string"`
@@ -46672,7 +46696,7 @@ type RestoreDBClusterToPointInTimeInput struct {
 	//
 	// Constraints: If supplied, must match the name of an existing DBSubnetGroup.
 	//
-	// Example: mySubnetgroup
+	// Example: mydbsubnetgroup
 	//
 	// Valid for: Aurora DB clusters and Multi-AZ DB clusters
 	DBSubnetGroupName *string `type:"string"`
@@ -47171,7 +47195,16 @@ type RestoreDBInstanceFromDBSnapshotInput struct {
 	BackupTarget *string `type:"string"`
 
 	// A value that indicates whether to copy all tags from the restored DB instance
-	// to snapshots of the DB instance. By default, tags are not copied.
+	// to snapshots of the DB instance.
+	//
+	// In most cases, tags aren't copied by default. However, when you restore a
+	// DB instance from a DB snapshot, RDS checks whether you specify new tags.
+	// If yes, the new tags are added to the restored DB instance. If there are
+	// no new tags, RDS looks for the tags from the source DB instance for the DB
+	// snapshot, and then adds those tags to the restored DB instance.
+	//
+	// For more information, see Copying tags to DB instance snapshots (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.html#USER_Tagging.CopyTags)
+	// in the Amazon RDS User Guide.
 	CopyTagsToSnapshot *bool `type:"boolean"`
 
 	// The instance profile associated with the underlying Amazon EC2 instance of
@@ -47187,7 +47220,7 @@ type RestoreDBInstanceFromDBSnapshotInput struct {
 	//
 	// For the list of permissions required for the IAM role, see Configure IAM
 	// and your VPC (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-setup-orcl.html#custom-setup-orcl.iam-vpc)
-	// in the Amazon Relational Database Service User Guide.
+	// in the Amazon RDS User Guide.
 	//
 	// This setting is required for RDS Custom.
 	CustomIamInstanceProfile *string `type:"string"`
@@ -47257,7 +47290,7 @@ type RestoreDBInstanceFromDBSnapshotInput struct {
 	//
 	// Constraints: If supplied, must match the name of an existing DBSubnetGroup.
 	//
-	// Example: mySubnetgroup
+	// Example: mydbsubnetgroup
 	DBSubnetGroupName *string `type:"string"`
 
 	// A value that indicates whether the DB instance has deletion protection enabled.
@@ -47797,6 +47830,10 @@ type RestoreDBInstanceFromS3Input struct {
 	DBSecurityGroups []*string `locationNameList:"DBSecurityGroupName" type:"list"`
 
 	// A DB subnet group to associate with this DB instance.
+	//
+	// Constraints: If supplied, must match the name of an existing DBSubnetGroup.
+	//
+	// Example: mydbsubnetgroup
 	DBSubnetGroupName *string `type:"string"`
 
 	// A value that indicates whether the DB instance has deletion protection enabled.
@@ -48489,7 +48526,7 @@ type RestoreDBInstanceToPointInTimeInput struct {
 	//
 	// Constraints: If supplied, must match the name of an existing DBSubnetGroup.
 	//
-	// Example: mySubnetgroup
+	// Example: mydbsubnetgroup
 	DBSubnetGroupName *string `type:"string"`
 
 	// A value that indicates whether the DB instance has deletion protection enabled.
@@ -51659,6 +51696,9 @@ const (
 
 	// SourceTypeCustomEngineVersion is a SourceType enum value
 	SourceTypeCustomEngineVersion = "custom-engine-version"
+
+	// SourceTypeDbProxy is a SourceType enum value
+	SourceTypeDbProxy = "db-proxy"
 )
 
 // SourceType_Values returns all elements of the SourceType enum
@@ -51671,6 +51711,7 @@ func SourceType_Values() []string {
 		SourceTypeDbCluster,
 		SourceTypeDbClusterSnapshot,
 		SourceTypeCustomEngineVersion,
+		SourceTypeDbProxy,
 	}
 }
 

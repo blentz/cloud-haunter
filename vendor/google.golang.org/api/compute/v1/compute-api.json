@@ -9590,6 +9590,53 @@
             "https://www.googleapis.com/auth/compute"
           ]
         },
+        "resume": {
+          "description": "Resumes an instance that was suspended using the instances().suspend method.",
+          "flatPath": "projects/{project}/zones/{zone}/instances/{instance}/resume",
+          "httpMethod": "POST",
+          "id": "compute.instances.resume",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Name of the instance resource to resume.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported ( 00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/zones/{zone}/instances/{instance}/resume",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
         "sendDiagnosticInterrupt": {
           "description": "Sends diagnostic interrupt to the instance.",
           "flatPath": "projects/{project}/zones/{zone}/instances/{instance}/sendDiagnosticInterrupt",
@@ -10040,7 +10087,7 @@
           ]
         },
         "setScheduling": {
-          "description": "Sets an instance's scheduling options. You can only call this method on a stopped instance, that is, a VM instance that is in a `TERMINATED` state. See Instance Life Cycle for more information on the possible instance states.",
+          "description": "Sets an instance's scheduling options. You can only call this method on a stopped instance, that is, a VM instance that is in a `TERMINATED` state. See Instance Life Cycle for more information on the possible instance states. For more information about setting scheduling options for a VM, see Set VM availability policies.",
           "flatPath": "projects/{project}/zones/{zone}/instances/{instance}/setScheduling",
           "httpMethod": "POST",
           "id": "compute.instances.setScheduling",
@@ -10240,7 +10287,7 @@
           ]
         },
         "simulateMaintenanceEvent": {
-          "description": "Simulates a maintenance event on the instance.",
+          "description": "Simulates a host maintenance event on a VM. For more information, see Simulate a host maintenance event.",
           "flatPath": "projects/{project}/zones/{zone}/instances/{instance}/simulateMaintenanceEvent",
           "httpMethod": "POST",
           "id": "compute.instances.simulateMaintenanceEvent",
@@ -10417,6 +10464,53 @@
             }
           },
           "path": "projects/{project}/zones/{zone}/instances/{instance}/stop",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "suspend": {
+          "description": "This method suspends a running instance, saving its state to persistent storage, and allows you to resume the instance at a later time. Suspended instances have no compute costs (cores or RAM), and incur only storage charges for the saved VM memory and localSSD data. Any charged resources the virtual machine was using, such as persistent disks and static IP addresses, will continue to be charged while the instance is suspended. For more information, see Suspending and resuming an instance.",
+          "flatPath": "projects/{project}/zones/{zone}/instances/{instance}/suspend",
+          "httpMethod": "POST",
+          "id": "compute.instances.suspend",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Name of the instance resource to suspend.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported ( 00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/zones/{zone}/instances/{instance}/suspend",
           "response": {
             "$ref": "Operation"
           },
@@ -28809,7 +28903,7 @@
       }
     }
   },
-  "revision": "20211208",
+  "revision": "20220112",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -29768,6 +29862,10 @@
       "properties": {
         "enableNestedVirtualization": {
           "description": "Whether to enable nested virtualization or not (default is false).",
+          "type": "boolean"
+        },
+        "enableUefiNetworking": {
+          "description": "Whether to enable UEFI networking for instance creation.",
           "type": "boolean"
         },
         "threadsPerCore": {
@@ -31280,6 +31378,7 @@
           "description": "Specifies the load balancer type. A backend service created for one type of load balancer cannot be used with another. For more information, refer to Choosing a load balancer.",
           "enum": [
             "EXTERNAL",
+            "EXTERNAL_MANAGED",
             "INTERNAL",
             "INTERNAL_MANAGED",
             "INTERNAL_SELF_MANAGED",
@@ -31287,6 +31386,7 @@
           ],
           "enumDescriptions": [
             "Signifies that this will be used for external HTTP(S), SSL Proxy, TCP Proxy, or Network Load Balancing",
+            "Signifies that this will be used for External Managed HTTP(S) Load Balancing.",
             "Signifies that this will be used for Internal TCP/UDP Load Balancing.",
             "Signifies that this will be used for Internal HTTP(S) Load Balancing.",
             "Signifies that this will be used by Traffic Director.",
@@ -31380,7 +31480,7 @@
         },
         "securitySettings": {
           "$ref": "SecuritySettings",
-          "description": "This field specifies the security policy that applies to this backend service. This field is applicable to either: - A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. - A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED. "
+          "description": "This field specifies the security settings that apply to this backend service. This field is applicable to a global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED."
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
@@ -35421,12 +35521,14 @@
           "description": "Specifies the forwarding rule type. For more information about forwarding rules, refer to Forwarding rule concepts.",
           "enum": [
             "EXTERNAL",
+            "EXTERNAL_MANAGED",
             "INTERNAL",
             "INTERNAL_MANAGED",
             "INTERNAL_SELF_MANAGED",
             "INVALID"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -38978,6 +39080,26 @@
           "format": "int32",
           "type": "integer"
         },
+        "resuming": {
+          "description": "[Output Only] The number of instances in the managed instance group that are scheduled to be resumed or are currently being resumed.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "starting": {
+          "description": "[Output Only] The number of instances in the managed instance group that are scheduled to be started or are currently being started.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "stopping": {
+          "description": "[Output Only] The number of instances in the managed instance group that are scheduled to be stopped or are currently being stopped.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "suspending": {
+          "description": "[Output Only] The number of instances in the managed instance group that are scheduled to be suspended or are currently being suspended.",
+          "format": "int32",
+          "type": "integer"
+        },
         "verifying": {
           "description": "[Output Only] The number of instances in the managed instance group that are being verified. See the managedInstances[].currentAction property in the listManagedInstances method documentation.",
           "format": "int32",
@@ -40346,6 +40468,10 @@
             "RECREATING",
             "REFRESHING",
             "RESTARTING",
+            "RESUMING",
+            "STARTING",
+            "STOPPING",
+            "SUSPENDING",
             "VERIFYING"
           ],
           "enumDescriptions": [
@@ -40357,6 +40483,10 @@
             "The managed instance group is recreating this instance.",
             "The managed instance group is applying configuration changes to the instance without stopping it. For example, the group can update the target pool list for an instance without stopping that instance.",
             "The managed instance group is restarting this instance.",
+            "The managed instance group is resuming this instance.",
+            "The managed instance group is starting this instance.",
+            "The managed instance group is stopping this instance.",
+            "The managed instance group is suspending this instance.",
             "The managed instance group is verifying this already created instance. Verification happens every time the instance is (re)created or restarted and consists of: 1. Waiting until health check specified as part of this managed instance group's autohealing policy reports HEALTHY. Note: Applies only if autohealing policy has a health check specified 2. Waiting for addition verification steps performed as post-instance creation (subject to future extensions)."
           ],
           "type": "string"
@@ -40485,6 +40615,13 @@
         "reservationAffinity": {
           "$ref": "ReservationAffinity",
           "description": "Specifies the reservations that instances can consume from. Note that for MachineImage, this is not supported yet."
+        },
+        "resourceManagerTags": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Resource manager tags to be bound to the instance. Tag keys and values have the same definition as resource manager tags. Keys must be in the format `tagKeys/{tag_key_id}`, and values are in the format `tagValues/456`. The field is ignored (both PUT \u0026 PATCH) when empty.",
+          "type": "object"
         },
         "resourcePolicies": {
           "description": "Resource policies (names, not URLs) applied to instances created from these properties. Note that for MachineImage, this is not supported yet.",
@@ -42715,7 +42852,7 @@
       "id": "LocationPolicyLocation",
       "properties": {
         "preference": {
-          "description": "Preference for a given location: ALLOW or DENY.",
+          "description": "Preference for a given location.",
           "enum": [
             "ALLOW",
             "DENY",
@@ -43509,6 +43646,10 @@
             "RECREATING",
             "REFRESHING",
             "RESTARTING",
+            "RESUMING",
+            "STARTING",
+            "STOPPING",
+            "SUSPENDING",
             "VERIFYING"
           ],
           "enumDescriptions": [
@@ -43520,6 +43661,10 @@
             "The managed instance group is recreating this instance.",
             "The managed instance group is applying configuration changes to the instance without stopping it. For example, the group can update the target pool list for an instance without stopping that instance.",
             "The managed instance group is restarting this instance.",
+            "The managed instance group is resuming this instance.",
+            "The managed instance group is starting this instance.",
+            "The managed instance group is stopping this instance.",
+            "The managed instance group is suspending this instance.",
             "The managed instance group is verifying this already created instance. Verification happens every time the instance is (re)created or restarted and consists of: 1. Waiting until health check specified as part of this managed instance group's autohealing policy reports HEALTHY. Note: Applies only if autohealing policy has a health check specified 2. Waiting for addition verification steps performed as post-instance creation (subject to future extensions)."
           ],
           "type": "string"
@@ -49013,6 +49158,7 @@
             "COMMITTED_E2_CPUS",
             "COMMITTED_LICENSES",
             "COMMITTED_LOCAL_SSD_TOTAL_GB",
+            "COMMITTED_M3_CPUS",
             "COMMITTED_MEMORY_OPTIMIZED_CPUS",
             "COMMITTED_N2A_CPUS",
             "COMMITTED_N2D_CPUS",
@@ -49056,6 +49202,7 @@
             "LOCAL_SSD_TOTAL_GB",
             "M1_CPUS",
             "M2_CPUS",
+            "M3_CPUS",
             "MACHINE_IMAGES",
             "N2A_CPUS",
             "N2D_CPUS",
@@ -49153,7 +49300,9 @@
             "",
             "",
             "",
+            "",
             "Guest CPUs",
+            "",
             "",
             "",
             "",
@@ -53539,7 +53688,7 @@
           "type": "array"
         },
         "onHostMaintenance": {
-          "description": "Defines the maintenance behavior for this instance. For standard instances, the default behavior is MIGRATE. For preemptible instances, the default and only possible behavior is TERMINATE. For more information, see Setting Instance Scheduling Options.",
+          "description": "Defines the maintenance behavior for this instance. For standard instances, the default behavior is MIGRATE. For preemptible instances, the default and only possible behavior is TERMINATE. For more information, see Set VM availability policies.",
           "enum": [
             "MIGRATE",
             "TERMINATE"

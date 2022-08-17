@@ -10,7 +10,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-/// versions patched for Log4Shell vuln.
+// / versions patched for Log4Shell vuln.
 var PATCHED []string = []string{
 	"2019.019.2",
 	"2020.004.3",
@@ -24,7 +24,7 @@ var PATCHED []string = []string{
 	"develop-SNAPSHOT",
 }
 
-var MIN_VERSION = semver.Build("v2021.021.0")  // minimum valid version for semver checks.
+var MIN_VERSION = semver.Build("v2021.021.0") // minimum valid version for semver checks.
 
 type tamrVersionInputs struct {
 	path string

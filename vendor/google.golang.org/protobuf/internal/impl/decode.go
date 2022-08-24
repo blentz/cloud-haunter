@@ -46,7 +46,11 @@ func (o unmarshalOptions) IsDefault() bool {
 }
 
 var lazyUnmarshalOptions = unmarshalOptions{
+<<<<<<< HEAD
 	resolver: protoregistry.GlobalTypes,
+=======
+	resolver: preg.GlobalTypes,
+>>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)
 	depth:    protowire.DefaultRecursionLimit,
 }
 

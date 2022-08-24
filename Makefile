@@ -70,7 +70,7 @@ cleanup:
 	rm -rf release && mkdir release
 
 build-darwin:
-	GO111MODULE=on GOOS=darwin CGO_ENABLED=0 go build -mod=vendor -ldflags "$(LDFLAGS)" -o build/Darwin/${BINARY} main.go
+	GO111MODULE=on GOOS=darwin CGO_ENABLED=1 go build -mod=vendor -ldflags "$(LDFLAGS)" -o build/Darwin/${BINARY} main.go
 
 build-linux:
 	GO111MODULE=on GOOS=linux CGO_ENABLED=0 go build -mod=vendor -ldflags "$(LDFLAGS)" -o build/Linux/${BINARY} main.go

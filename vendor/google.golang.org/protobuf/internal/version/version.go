@@ -52,7 +52,11 @@ import (
 const (
 	Major      = 1
 	Minor      = 28
+<<<<<<< HEAD
 	Patch      = 1
+=======
+	Patch      = 0
+>>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)
 	PreRelease = ""
 )
 

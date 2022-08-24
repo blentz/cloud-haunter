@@ -43,6 +43,9 @@ const (
 
 	// Unused state of the cloud item
 	Unused = State("unused")
+
+	// Idle state of the cloud item
+	Idle = State("idle")
 )
 
 // State string representation of the cloud item

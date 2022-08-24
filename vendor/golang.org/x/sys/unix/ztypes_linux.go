@@ -5602,8 +5602,11 @@ const (
 	FR_ACT_UNREACHABLE     = 0x7
 	FR_ACT_PROHIBIT        = 0x8
 )
+<<<<<<< HEAD
 
 const (
 	AUDIT_NLGRP_NONE    = 0x0
 	AUDIT_NLGRP_READLOG = 0x1
 )
+=======
+>>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)

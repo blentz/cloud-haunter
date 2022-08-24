@@ -24,7 +24,7 @@ import (
 	"google.golang.org/api/iam/v1"
 	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
-	"google.golang.org/api/sqladmin/v1beta4"
+	sqladmin "google.golang.org/api/sqladmin/v1beta4"
 	dataprocpb "google.golang.org/genproto/googleapis/cloud/dataproc/v1"
 )
 

@@ -9181,10 +9181,17 @@ type ProjectsServiceAccountsGetIamPolicyCall struct {
 // (https://cloud.google.com/resource-manager/reference/rest/v1/projects/getIamPolicy)
 // method.
 //
+<<<<<<< HEAD
 //   - resource: REQUIRED: The resource for which the policy is being
 //     requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
+=======
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+>>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)
 func (r *ProjectsServiceAccountsService) GetIamPolicy(resource string) *ProjectsServiceAccountsGetIamPolicyCall {
 	c := &ProjectsServiceAccountsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9704,10 +9711,17 @@ type ProjectsServiceAccountsSetIamPolicyCall struct {
 // or Manage access to other resources
 // (https://cloud.google.com/iam/help/access/manage-other-resources).
 //
+<<<<<<< HEAD
 //   - resource: REQUIRED: The resource for which the policy is being
 //     specified. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
+=======
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+>>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)
 func (r *ProjectsServiceAccountsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsServiceAccountsSetIamPolicyCall {
 	c := &ProjectsServiceAccountsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10158,10 +10172,17 @@ type ProjectsServiceAccountsTestIamPermissionsCall struct {
 // TestIamPermissions: Tests whether the caller has the specified
 // permissions on a ServiceAccount.
 //
+<<<<<<< HEAD
 //   - resource: REQUIRED: The resource for which the policy detail is
 //     being requested. See Resource names
 //     (https://cloud.google.com/apis/design/resource_names) for the
 //     appropriate value for this field.
+=======
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See Resource names
+//   (https://cloud.google.com/apis/design/resource_names) for the
+//   appropriate value for this field.
+>>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)
 func (r *ProjectsServiceAccountsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsServiceAccountsTestIamPermissionsCall {
 	c := &ProjectsServiceAccountsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

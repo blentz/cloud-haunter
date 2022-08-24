@@ -42,6 +42,9 @@ const (
 
 	// TamrVersionFilter filters the items based on the version of Tamr software installed on an instance.
 	TamrVersionFilter = FilterType("tamr-version")
+
+	// IdleFilter filters the items that have been idle
+	IdleFilter = FilterType("idle")
 )
 
 // FilterConfigType inclusive or exclusive filter type

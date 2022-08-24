@@ -11966,11 +11966,19 @@ type UsersGetCall struct {
 
 // Get: Retrieves a resource containing information about a user.
 //
+<<<<<<< HEAD
 //   - instance: Database instance ID. This does not include the project
 //     ID.
 //   - name: User of the instance. If the database user has a host, this
 //     is specified as {username}@{host} else as {username}.
 //   - project: Project ID of the project that contains the instance.
+=======
+// - instance: Database instance ID. This does not include the project
+//   ID.
+// - name: User of the instance. If the database user has a host, this
+//   is specified as {username}@{host} else as {username}.
+// - project: Project ID of the project that contains the instance.
+>>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)
 func (r *UsersService) Get(project string, instance string, name string) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project

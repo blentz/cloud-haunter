@@ -3,11 +3,12 @@ package types
 import (
 	"bytes"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"net"
 	"net/http"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type InstanceContainer struct {
@@ -42,6 +43,7 @@ type Instance struct {
 	Region       string            `json:"Region"`
 	Ephemeral    bool              `json:"Ephemeral"`
 	IpAddress    string            `json:"IpAddress"`
+	Metrics      map[string]string `json:"Metrics"`
 }
 
 // Tags Key-value pairs of the tags on the instances

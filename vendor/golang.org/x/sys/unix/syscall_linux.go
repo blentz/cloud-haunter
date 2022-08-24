@@ -1541,7 +1541,11 @@ func sendmsgN(fd int, iov []Iovec, oob []byte, ptr unsafe.Pointer, salen _Sockle
 	var dummy byte
 	var empty bool
 	if len(oob) > 0 {
+<<<<<<< HEAD
 		empty = emptyIovecs(iov)
+=======
+		empty := emptyIovecs(iov)
+>>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)
 		if empty {
 			var sockType int
 			sockType, err = GetsockoptInt(fd, SOL_SOCKET, SO_TYPE)

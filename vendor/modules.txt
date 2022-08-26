@@ -9,6 +9,10 @@ cloud.google.com/go/compute/metadata
 ## explicit; go 1.16
 cloud.google.com/go/dataproc/apiv1
 cloud.google.com/go/dataproc/internal
+# cloud.google.com/go/monitoring v1.6.0
+## explicit; go 1.17
+cloud.google.com/go/monitoring/apiv3/v2
+cloud.google.com/go/monitoring/internal
 # github.com/Azure/azure-pipeline-go v0.2.3
 ## explicit; go 1.14
 github.com/Azure/azure-pipeline-go/pipeline
@@ -163,6 +167,9 @@ github.com/pmezard/go-difflib/difflib
 # github.com/sirupsen/logrus v1.9.0
 ## explicit; go 1.13
 github.com/sirupsen/logrus
+# github.com/spenczar/tdigest v2.1.0+incompatible
+## explicit
+github.com/spenczar/tdigest
 # github.com/stretchr/testify v1.7.0
 ## explicit; go 1.13
 github.com/stretchr/testify/assert
@@ -264,12 +271,19 @@ google.golang.org/appengine/socket
 google.golang.org/appengine/urlfetch
 # google.golang.org/genproto v0.0.0-20220817144833-d7fd3f11b9b1
 ## explicit; go 1.19
+google.golang.org/genproto/googleapis/api
 google.golang.org/genproto/googleapis/api/annotations
+google.golang.org/genproto/googleapis/api/distribution
+google.golang.org/genproto/googleapis/api/label
+google.golang.org/genproto/googleapis/api/metric
+google.golang.org/genproto/googleapis/api/monitoredres
 google.golang.org/genproto/googleapis/cloud/dataproc/v1
 google.golang.org/genproto/googleapis/longrunning
+google.golang.org/genproto/googleapis/monitoring/v3
 google.golang.org/genproto/googleapis/rpc/code
 google.golang.org/genproto/googleapis/rpc/errdetails
 google.golang.org/genproto/googleapis/rpc/status
+google.golang.org/genproto/googleapis/type/calendarperiod
 # google.golang.org/grpc v1.48.0
 ## explicit; go 1.14
 google.golang.org/grpc
@@ -367,7 +381,9 @@ google.golang.org/protobuf/types/known/anypb
 google.golang.org/protobuf/types/known/durationpb
 google.golang.org/protobuf/types/known/emptypb
 google.golang.org/protobuf/types/known/fieldmaskpb
+google.golang.org/protobuf/types/known/structpb
 google.golang.org/protobuf/types/known/timestamppb
+google.golang.org/protobuf/types/known/wrapperspb
 # gopkg.in/yaml.v2 v2.4.0
 ## explicit; go 1.15
 gopkg.in/yaml.v2

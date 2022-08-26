@@ -5,8 +5,4 @@
 package internal
 
 // Version is the current tagged release of the library.
-<<<<<<< HEAD
 const Version = "0.93.0"
-=======
-const Version = "0.91.0"
->>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)

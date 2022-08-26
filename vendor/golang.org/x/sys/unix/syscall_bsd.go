@@ -363,11 +363,7 @@ func sendmsgN(fd int, iov []Iovec, oob []byte, ptr unsafe.Pointer, salen _Sockle
 	var empty bool
 	if len(oob) > 0 {
 		// send at least one normal byte
-<<<<<<< HEAD
 		empty = emptyIovecs(iov)
-=======
-		empty := emptyIovecs(iov)
->>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)
 		if empty {
 			var iova [1]Iovec
 			iova[0].Base = &dummy

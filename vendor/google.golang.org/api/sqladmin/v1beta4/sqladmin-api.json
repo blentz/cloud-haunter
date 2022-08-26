@@ -1916,11 +1916,7 @@
       }
     }
   },
-<<<<<<< HEAD
   "revision": "20220804",
-=======
-  "revision": "20220724",
->>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {

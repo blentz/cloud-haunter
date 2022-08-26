@@ -50,10 +50,7 @@ import (
 // always references the source object.
 //
 // For example:
-<<<<<<< HEAD
 //
-=======
->>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)
 //	// Append a 0 to a "repeated int32" field.
 //	// Since the Value returned by Mutable is guaranteed to alias
 //	// the source message, modifying the Value modifies the message.

@@ -218,7 +218,6 @@ func Accept(fd int) (nfd int, sa Sockaddr, err error) {
 }
 
 func recvmsgRaw(fd int, iov []Iovec, oob []byte, flags int, rsa *RawSockaddrAny) (n, oobn int, recvflags int, err error) {
-<<<<<<< HEAD
 	var msg Msghdr
 	msg.Name = (*byte)(unsafe.Pointer(rsa))
 	msg.Namelen = uint32(SizeofSockaddrAny)
@@ -275,15 +274,6 @@ func sendmsgN(fd int, iov []Iovec, oob []byte, ptr unsafe.Pointer, salen _Sockle
 		n = 0
 	}
 	return n, nil
-=======
-	// Recvmsg not implemented on AIX
-	return -1, -1, -1, ENOSYS
-}
-
-func sendmsgN(fd int, iov []Iovec, oob []byte, ptr unsafe.Pointer, salen _Socklen, flags int) (n int, err error) {
-	// SendmsgN not implemented on AIX
-	return -1, ENOSYS
->>>>>>> e8b158a (DSD-1419: validate idle instance detection logic)
 }
 
 func anyToSockaddr(fd int, rsa *RawSockaddrAny) (Sockaddr, error) {

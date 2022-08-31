@@ -21,11 +21,14 @@ func init() {
 	ctx.Filters[types.IdleFilter] = idle{}
 }
 
+type op func(float64) float64
+
 type IdleMetric struct {
 	metric     string
 	percentile float64
 	limit      float64
 	measured   float64
+	operation  op
 }
 
 //get percentile
@@ -82,12 +85,26 @@ func getTimeSeriesValue(projectID, metric, instance string) ([]float64, error) {
 	return rstats, nil
 }
 
+func id(x float64) float64 {
+	return x
+}
+
+//func(x float64) { return x / 60 }
+func div60(x float64) float64 {
+	return x / 60
+}
+
 // Define what is an Idle instance here
-func IsIdle(projectID, instance string) bool {
+// CPU utilization is less than 0.03 vCPUs for 97% of VM runtime.
+// Received network traffic is less than 2600 bytes per second (B/s) for 95% of VM runtime.
+// Sent network traffic is less than 1000 B/s for 95% of VM runtime.
+// should return True if instance is idle.
+func isIdleFiltered(projectID, instance string) bool {
 	idleMetrics := map[string]IdleMetric{
-		"received_bytes": {limit: 156000, percentile: 0.95, metric: "compute.googleapis.com/instance/network/received_packets_count"},
-		"usage":          {limit: 0.03, percentile: 0.97, metric: "compute.googleapis.com/instance/cpu/utilization"},
-		"sent_bytes":     {limit: 60000, percentile: 0.95, metric: "compute.googleapis.com/instance/network/sent_bytes_count"},
+
+		"received_bytes": {limit: 2600, percentile: 0.95, metric: "compute.googleapis.com/instance/network/received_bytes_count", operation: div60},
+		"usage":          {limit: 0.03, percentile: 0.97, metric: "compute.googleapis.com/instance/cpu/utilization", operation: id},
+		"sent_bytes":     {limit: 1000, percentile: 0.95, metric: "compute.googleapis.com/instance/network/sent_bytes_count", operation: div60},
 	}
 	for _key, idleMetric := range idleMetrics {
 		stats, err := getTimeSeriesValue(projectID, idleMetric.metric, instance)
@@ -95,10 +112,11 @@ func IsIdle(projectID, instance string) bool {
 			log.Errorln(err)
 		}
 		copyMetric := idleMetrics[_key]
-		copyMetric.measured = getPercentile(stats, copyMetric.percentile)
+		copyMetric.measured = copyMetric.operation(getPercentile(stats, copyMetric.percentile))
 		idleMetrics[_key] = copyMetric
-		log.Printf("metric : %s ,instance = %s ,percentile = %f, limit = %f, measured = %f \n", _key, instance, idleMetrics[_key].percentile, idleMetrics[_key].limit, idleMetrics[_key].measured)
+		log.Printf("metric = %s ,instance = %s ,percentile = %f, limit = %f, measured = %f filtered = %t\n", _key, instance, idleMetrics[_key].percentile, idleMetrics[_key].limit, idleMetrics[_key].measured, idleMetrics[_key].measured < idleMetrics[_key].limit)
 	}
+	log.Printf("%f,%f,%f,%f,%f,%f", idleMetrics["usage"].measured, idleMetrics["usage"].limit, idleMetrics["received_bytes"].measured, idleMetrics["received_bytes"].limit, idleMetrics["sent_bytes"].measured, idleMetrics["sent_bytes"].limit)
 	return idleMetrics["usage"].measured < idleMetrics["usage"].limit && idleMetrics["received_bytes"].measured < idleMetrics["received_bytes"].limit && idleMetrics["sent_bytes"].measured < idleMetrics["sent_bytes"].limit
 
 }
@@ -109,7 +127,7 @@ type idle struct {
 func (f idle) Execute(items []types.CloudItem) []types.CloudItem {
 	log.Debugf("[idle] Filtering items (%d): [%s]", len(items), items)
 	return filter("idle", items, types.ExclusiveFilter, func(item types.CloudItem) bool {
-		filtered := IsIdle(os.Getenv("GOOGLE_PROJECT_ID"), item.GetName())
+		filtered := isIdleFiltered(os.Getenv("GOOGLE_PROJECT_ID"), item.GetName())
 		return filtered
 	})
 }

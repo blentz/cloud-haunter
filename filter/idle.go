@@ -89,7 +89,6 @@ func id(x float64) float64 {
 	return x
 }
 
-
 // Define what is an Idle instance here
 // CPU utilization is less than 0.15 vCPUs for 95% of VM runtime(30 days).
 // should return True if instance is idle.
@@ -117,8 +116,8 @@ type idle struct {
 func (f idle) Execute(items []types.CloudItem) []types.CloudItem {
 	log.Debugf("[idle] Filtering items (%d): [%s]", len(items), items)
 	return filter("idle", items, types.ExclusiveFilter, func(item types.CloudItem) bool {
-		if item.GetCreated().Before(time.Now().Add(-30 * 24 * time.Hour)) {
-			log.Printf("[idle] Skipping item %s because it is older than 30 days", item.GetName())
+		if item.GetCreated().After(time.Now().Add(-30 * 24 * time.Hour)) {
+			log.Printf("[idle] Skipping item %s because it was created less than 30 days", item.GetName())
 			return false
 		} else {
 			filtered := isIdleFiltered(os.Getenv("GOOGLE_PROJECT_ID"), item.GetName())

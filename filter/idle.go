@@ -89,8 +89,9 @@ func id(x float64) float64 {
 	return x
 }
 
+
 // Define what is an Idle instance here
-// CPU utilization is less than 0.03 vCPUs for 97% of VM runtime.
+// CPU utilization is less than 0.15 vCPUs for 95% of VM runtime(30 days).
 // should return True if instance is idle.
 func isIdleFiltered(projectID, instance string) bool {
 	idleMetrics := map[string]IdleMetric{
@@ -108,7 +109,6 @@ func isIdleFiltered(projectID, instance string) bool {
 	}
 	log.Printf("%f,%f", idleMetrics["usage"].measured, idleMetrics["usage"].limit)
 	return idleMetrics["usage"].measured < idleMetrics["usage"].limit
-
 }
 
 type idle struct {
